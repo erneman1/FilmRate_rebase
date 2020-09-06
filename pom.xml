@@ -9,9 +9,9 @@
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
     <groupId>ua.cursor</groupId>
-    <artifactId>movie-platform</artifactId>
+    <artifactId>film-rate</artifactId>
     <version>1.1</version>
-    <name>Movie Platform</name>
+    <name>FilmRate</name>
     <description>Spring Team Project Java-Hippolyta</description>
 
     <properties>
