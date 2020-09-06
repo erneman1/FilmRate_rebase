@@ -4,6 +4,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ua.cursor.movieplatform.dto.RoleDTO;
 import ua.cursor.movieplatform.dto.UserDTO;
+import ua.cursor.movieplatform.dto.base.UserBaseDTO;
+import ua.cursor.movieplatform.entity.User;
 import ua.cursor.movieplatform.repository.UserRepository;
 import ua.cursor.movieplatform.service.mapper.UserMapper;
 
@@ -54,5 +56,17 @@ public class UserService {
         userRepository.save(userMapper.toUserEntityFromDTO(userDTO3));
 
         userRepository.findAllWithRoles().forEach(System.out::println);
+    }
+
+    public void saveUser(User user){
+        userRepository.save(user);
+    }
+
+    public UserBaseDTO getBaseUserDTOById(long id){
+        return userMapper.toUserBaseDTO(userRepository.findById(id));
+    }
+
+    public UserDTO getUserDTOById(long id){
+        return userMapper.toUserDTO(userRepository.findById(id));
     }
 }

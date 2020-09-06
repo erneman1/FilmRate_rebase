@@ -11,4 +11,6 @@ import java.util.List;
 public interface UserRepository extends JpaRepository<User, Long> {
     @Query("from User as u left join fetch u.userRoles ")
     List<User> findAllWithRoles();
+
+    User findById(long id);
 }

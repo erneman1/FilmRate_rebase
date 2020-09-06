@@ -1,6 +1,10 @@
 package ua.cursor.movieplatform.dto.base;
 
 import lombok.*;
+import ua.cursor.movieplatform.dto.CategoryDTO;
+
+import java.util.HashSet;
+import java.util.Set;
 
 @Data
 @AllArgsConstructor
@@ -16,4 +20,5 @@ public class MovieBaseDTO {
     @NonNull
     private String description;
     private Double rateValue;
+    private Set<CategoryDTO> categories = new HashSet<>();
 }

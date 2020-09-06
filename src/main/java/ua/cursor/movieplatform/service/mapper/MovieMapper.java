@@ -9,6 +9,8 @@ import ua.cursor.movieplatform.entity.Category;
 import ua.cursor.movieplatform.entity.Movie;
 import ua.cursor.movieplatform.entity.Review;
 
+import java.util.List;
+
 @Mapper(uses = {CategoryMapper.class, ReviewMapper.class},
         nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE,
         nullValueCheckStrategy = NullValueCheckStrategy.ALWAYS)
@@ -18,7 +20,12 @@ public interface MovieMapper {
     @Mapping(target = "categories", ignore = true)
     MovieDTO toMovieDTO(Movie movie);
 
+    @Mapping(target = "categories", ignore = true)
+    @Named(value = "useMe")
     MovieBaseDTO toMovieBaseDTO(Movie movie);
+
+    @IterableMapping(qualifiedByName = "useMe")
+    List<MovieBaseDTO> toMovieBaseDTOs(List<Movie> movies);
 
     @AfterMapping
     default void toMovieDTOMapping(@MappingTarget MovieDTO movieDTO) {
