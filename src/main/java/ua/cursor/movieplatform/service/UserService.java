@@ -58,7 +58,7 @@ public class UserService {
         userRepository.findAllWithRoles().forEach(System.out::println);
     }
 
-    public void saveUser(User user){
+    public void save(User user){
         userRepository.save(user);
     }
 
