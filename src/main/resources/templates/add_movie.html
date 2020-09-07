@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Film Rate</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+</head>
+<body style="background: url(https://images.unsplash.com/photo-1553615738-d8e0829f1d61?ixlib=rb-1.2.1&auto=format&fit=crop&w=1489&q=80) no-repeat fixed center; background-size: cover">
+<div class="container justify-content-center">
+
+    <nav class="p-2 bg-light position-static">
+        <ul class="nav nav-pills">
+            <li class="nav-item">
+                <a class="nav-link" th:href="@{/movie/all}">Home</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link active" href="#">Add movie</a>
+            </li>
+        </ul>
+    </nav>
+
+    <div class="d-flex flex-column justify-content-center align-items-center">
+        <div class="bg-light p-5 rounded mt-5">
+            <h3 class="text-center">Movie editor</h3>
+            <form action="#" th:action="@{/movie/save}" th:object="${movie}" method="post">
+                <label for="name">Enter name</label><br>
+                <input type="text" th:field="*{name}" id="name" placeholder="Enter name"><br>
+                <label for="director" class="mt-2">Enter director</label><br>
+                <input type="text" th:field="*{director}" id="director" placeholder="Enter director"><br>
+                <label for="description" class="mt-2">Description</label><br>
+                <textarea class="container-fluid" type="text" th:field="*{description}" id="description" placeholder="Enter description">
+        </textarea><br>
+                <input type="submit" value="Add movie" class="btn btn-info">
+            </form>
+        </div>
+    </div>
+
+
+</div>
+</body>
+</html>
