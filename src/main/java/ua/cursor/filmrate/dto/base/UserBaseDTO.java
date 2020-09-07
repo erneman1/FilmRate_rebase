@@ -12,5 +12,7 @@ public class UserBaseDTO {
     @NonNull
     private String name;
     @NonNull
+    private String login;
+    @NonNull
     private String password;
 }

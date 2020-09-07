@@ -9,7 +9,6 @@ import ua.cursor.filmrate.entity.User;
 import ua.cursor.filmrate.repository.UserRepository;
 import ua.cursor.filmrate.service.mapper.UserMapper;
 
-import javax.annotation.PostConstruct;
 import java.util.Set;
 
 @Service
@@ -25,7 +24,7 @@ public class UserService {
         this.roleService = roleService;
     }
 
-    @PostConstruct
+//    @PostConstruct
     @Transactional
     public void createUsers() {
         Set<RoleDTO> roles = roleService.findAll();
@@ -58,7 +57,7 @@ public class UserService {
         userRepository.findAllWithRoles().forEach(System.out::println);
     }
 
-    public void saveUser(User user){
+    public void save(User user){
         userRepository.save(user);
     }
 

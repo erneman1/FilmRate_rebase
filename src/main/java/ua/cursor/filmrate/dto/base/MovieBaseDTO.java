@@ -2,6 +2,7 @@ package ua.cursor.filmrate.dto.base;
 
 import lombok.*;
 import ua.cursor.filmrate.dto.CategoryDTO;
+import ua.cursor.filmrate.dto.RateDTO;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -19,6 +20,6 @@ public class MovieBaseDTO {
     private String director;
     @NonNull
     private String description;
-    private Double rateValue;
+    private RateDTO rate;
     private Set<CategoryDTO> categories = new HashSet<>();
 }

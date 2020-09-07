@@ -1,10 +1,49 @@
 <!DOCTYPE html>
-<html xmlns:th="http://thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>homepage</title>
+    <title>Film Rate</title>
+    <link crossorigin="anonymous" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+          integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" rel="stylesheet">
 </head>
-<body>
-    <p>User: <span th:text="${usr}"/> </p>
+<body style="background: url(https://images.unsplash.com/photo-1553615738-d8e0829f1d61?ixlib=rb-1.2.1&auto=format&fit=crop&w=1489&q=80) no-repeat fixed center; background-size: cover">
+<div class="container">
+
+    <nav class="row p-2 bg-light position-sticky">
+        <ul class="nav nav-pills">
+            <li class="nav-item">
+                <a class="nav-link active" href="#">Home</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" th:href="@{/movies/add}">Add movie</a>
+            </li>
+        </ul>
+    </nav>
+
+    <div class="row p-2 bg-light position-static">
+        <ul class="nav nav-pills">
+            <li class="nav-item">
+                <a class="nav-link" th:href="@{/rating}">Sort by rating</a>
+            </li>
+        </ul>
+    </div>
+
+    <div class="row pt-2 pb-2 mt-3 bg-light rounded shadow" th:each="movie : ${movies}">
+        <div class="col">
+            <h4 th:text="${movie.name}"></h4>
+            <h6 th:text="${movie.director}"></h6>
+            <p th:text="${movie.description}"></p>
+            <h3 th:text="${movie.rate.rateValue}"></h3>
+            <h4 th:text="${movie.rate.votesCount}"></h4>
+        </div>
+        <div class="col-1 align-self-end">
+            <a class="btn btn-danger" onclick="if (!(confirm('Delete the movie?'))) return false"
+               th:href="@{/movies/${movie.id}}">
+                Delete</a>
+        </div>
+    </div>
+
+
+</div>
 </body>
 </html>

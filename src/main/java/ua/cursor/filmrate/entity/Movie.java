@@ -22,7 +22,9 @@ public class Movie {
     private String director;
     private String description;
 
-    private double rateValue;
+    @OneToOne(orphanRemoval = true, cascade = CascadeType.ALL)
+    @JoinColumn(name = "rate_id")
+    private Rate rate = new Rate();
 
     @OneToMany(mappedBy = "movie",
             cascade = CascadeType.ALL,
