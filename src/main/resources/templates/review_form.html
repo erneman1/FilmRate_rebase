@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:form="http://www.w3.org/1999/xhtml">
+<head>
+    <title>Review</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="stylesheet" href="../static/css/bootstrap.css" th:href="@{/css/bootstrap.css}">
+</head>
+<body style="background: url(https://img3.goodfon.com/wallpaper/nbig/5/41/apple-textures-fon-tekstura.jpg)">
+<div class="container">
+
+    <nav class="row p-2 bg-light position-sticky">
+        <ul class="nav nav-pills">
+            <li class="nav-item">
+                <a class="nav-link active" href="#">Home</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" th:href="@{/movies/add}">Add movie</a>
+            </li>
+        </ul>
+    </nav>
+
+    <form action="#" th:action="@{/movies/{id}/add-review(id=${movie_id})}" method="post" th:object="${review}">
+        <input type="text" th:field="*{message}">
+        <input type="submit" value="ADD" class="btn btn-info">
+    </form>
+
+</div>
+
+<!--JavaScript-->
+<script src="../static/js/bootstrap.bundle.js" th:href="@{/js/bootstrap.bundle.js}"></script>
+</body>
+</html>

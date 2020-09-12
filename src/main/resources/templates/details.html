@@ -4,28 +4,41 @@
     <title>Film Rate</title>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <link rel="stylesheet" href="../static/css/bootstrap.css">
+    <link rel="stylesheet" href="../static/css/bootstrap.css" th:href="@{/css/bootstrap.css}">
 </head>
 <body style="background: url(https://img3.goodfon.com/wallpaper/nbig/5/41/apple-textures-fon-tekstura.jpg)">
 <div class="container">
+    <nav class="row p-2 bg-light position-sticky">
+        <ul class="nav nav-pills">
+            <li class="nav-item">
+                <a class="nav-link active" href="#">Home</a>
+            </li>
+        </ul>
+    </nav>
 
     <div class="row">
-        <div class="col-11" th:object="${movie}">
-            <h2 th:text="*{name}"></h2>
-            <p th:text="*{director}"></p>
-            <p th:text="*{description}"></p>
-            <p th:text="*{rate}"></p>
+        <div class="col p-0 d-flex justify-content-center flex-column align-items-center text-light" th:object="${movie}">
+<!--            <img src="https://thumbs.dfs.ivi.ru/storage2/contents/d/b/714650fedeadc35ccef275393bbb80.jpg" class="col-12 p-0 mb-2">-->
+            <h1 th:text="*{name}">Вторая жизнь Уве</h1>
+            <p th:text="*{director}">Режиссер: Hannes Holm</p>
+            <h1 th:text="*{rate}"><span class="text-">Rating  </span> 8,7</h1>
+            <p th:text="*{description}" class="mt-5 text-justify">Экранизация бестселлера Фредерика Бакмана, созданная шведскими кинематографистами, подкупает своеобразным скандинавским юмором и заставляет задуматься о самых серьезных вещах: терпимости, толерантности и других общечеловеческих ценностях. После смерти горячо любимой жены Уве Линдал превратился в законченного мизантропа. Старый ворчун и зануда изводит придирками всех окружающих. Малейший непорядок его жутко раздражает: брошенный окурок, криво припаркованный автомобиль, оставленный где попало велосипед, неотсортированный мусор, раскиданные в песочнице игрушки, приблудная кошка, неплотно запертые ворота, гадящий на тротуарную плитку песик. Новое поколение Уве считает легкомысленными идиотами, жизнь потеряла для него всякий смысл, он уже готов свести с ней счеты. Однако суицидальные планы Уве рушатся с появлением новых соседей. Шумное семейство вынуждает Уве снова искать общий язык с миром. Сумеет ли старик справиться со своими обидами, если его многочисленные таланты – аккуратность, обстоятельность, рукастость – будут опять востребованы? Возможно, у него даже получится начать новую жизнь.</p>
         </div>
     </div>
 
-    <div class="col-1" th:each="categorie : ${categories}">
-        <p th:text="${categorie.name}"></p>
-        </d
+    <h3 class="text-light">Reviews:</h3>
+    <div th:each="review : ${reviews}" class="row bg-light rounded-lg text-left mb-3">
+        <p th:text="${review.message}" class="p-0 m-3"></p>
     </div>
 </div>
 
+<div class="container p-0 fixed-bottom mb-3">
+    <form th:action="@{/movies/{id}/add-review(id=${movie.id})}" th:method="get" class="col p-0 d-flex flex-row justify-content-end">
+        <input type="submit" value="Add review" class="btn btn-info align-self-end">
+    </form>
+</div>
 
 <!--JavaScript-->
-<script src="../static/js/bootstrap.bundle.js"></script>
+<script src="../static/js/bootstrap.bundle.js" th:href="@{/js/bootstrap.bundle.js}"></script>
 </body>
 </html>

@@ -47,30 +47,26 @@ public class MovieController {
         return "add_movie";
     }
 
-    @GetMapping("/{id}")
-    public MovieDTO getMovieById(@PathVariable long id) {
-        return movieService.getMovieByIdWithReviews(id);
-    }
-
     @GetMapping("/{id}/rate/{rate}")
     public String addRate(@PathVariable("id") Long id, @PathVariable("rate") Double rate) {
         movieService.addRate(id, rate);
         return "redirect:/movies";
     }
 
-    @PostMapping("/add-review")
-    public String addReview(Model model) {
+    @GetMapping("/{id}/add-review")
+    public String addReview(@PathVariable long id, Model model) {
         model.addAttribute("review", new ReviewDTO());
-        return "redirect:/movies";
+        model.addAttribute("movie_id", id);
+        return "review_form";
     }
 
     @PostMapping("/{id}/add-review")
-    public String saveReview(Model model, @PathVariable("id") Long id, ReviewDTO reviewDTO) {
+    public String saveReview(@PathVariable("id") Long id, ReviewDTO reviewDTO) {
         MovieDTO movieDTO = new MovieDTO();
         movieDTO.setId(id);
         reviewDTO.setMovie(movieDTO);
         movieService.saveReview(reviewDTO);
-        return "redirect:/movies";
+        return "redirect:/movies/" + id;
     }
 
     @GetMapping("/rating")
@@ -78,9 +74,9 @@ public class MovieController {
         return movieService.getAllMoviesSortedByRating();
     }
 
-    @GetMapping("/details")
-    public String getDetails(@RequestParam(value = "id") long id, Model model) {
-        MovieDTO movieDTO = movieService.getMovieByIdWithReviews(id);
+    @GetMapping("/{id}")
+    public String getMovieById(@PathVariable(value = "id")  long id, Model model){
+        MovieDTO movieDTO = (movieService.getMovieByIdWithReviews(id));
         model.addAttribute("movie", movieDTO);
         model.addAttribute("categories", movieDTO.getCategories());
         model.addAttribute("reviews", movieDTO.getReviews());
