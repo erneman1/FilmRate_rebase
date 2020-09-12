@@ -3,13 +3,15 @@ package ua.cursor.filmrate.service;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import ua.cursor.filmrate.dto.MovieDTO;
+import ua.cursor.filmrate.dto.ReviewDTO;
 import ua.cursor.filmrate.dto.base.MovieBaseDTO;
 import ua.cursor.filmrate.entity.Movie;
 import ua.cursor.filmrate.entity.Rate;
 import ua.cursor.filmrate.repository.MovieRepository;
+import ua.cursor.filmrate.repository.ReviewRepository;
 import ua.cursor.filmrate.service.mapper.MovieMapper;
+import ua.cursor.filmrate.service.mapper.ReviewMapper;
 
-import javax.annotation.PostConstruct;
 import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -19,7 +21,9 @@ import java.util.stream.Collectors;
 public class MovieService {
 
     private final MovieRepository movieRepository;
+    private final ReviewRepository reviewRepository;
     private final MovieMapper movieMapper;
+    private final ReviewMapper reviewMapper;
 
     public List<MovieBaseDTO> getAllMovies() {
         return movieMapper.toMovieBaseDTOs(movieRepository.findAll());
@@ -33,19 +37,26 @@ public class MovieService {
         );
     }
 
-    public MovieDTO getMovieById(long id) {
-        return movieMapper.toMovieDTO(movieRepository.getById(id));
+    public MovieDTO getMovieByIdWithReviews(long id) {
+        Movie movie = movieRepository.getByIdWithReviews(id);
+        System.out.println("FROM SERVICE BEFORE MAPPER " + movie.toString());
+        return movieMapper.toMovieDTO(movie);
     }
 
     public void save(Movie movie) {
         movieRepository.save(movie);
     }
 
+    public void saveReview(ReviewDTO reviewDTO) {
+        System.out.println(reviewDTO.toString());
+        reviewRepository.save(reviewMapper.toReviewEntityFromDTO(reviewDTO));
+    }
+
     public void delete(long id) {
         movieRepository.deleteById(id);
     }
 
-    public void addRate(Double rateValue, Long movieId) {
+    public void addRate(Long movieId, Double rateValue) {
         Movie movie = movieRepository.getById(movieId);
         Rate rate = movie.getRate();
         System.out.println("Rate Value " + rateValue);

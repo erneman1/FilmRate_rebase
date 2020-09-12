@@ -16,9 +16,9 @@ import java.util.List;
         nullValueCheckStrategy = NullValueCheckStrategy.ALWAYS)
 public interface MovieMapper {
 
-    @Mapping(target = "reviews", ignore = true)
-    @Mapping(target = "categories", ignore = true)
-    MovieDTO toMovieDTO(Movie movie);
+//    @Mapping(target = "reviews", ignore = true)
+//    @Mapping(target = "categories", ignore = true)
+MovieDTO toMovieDTO(Movie movie);
 
     @Mapping(target = "categories", ignore = true)
     @Named(value = "useMe")
@@ -29,6 +29,7 @@ public interface MovieMapper {
 
     @AfterMapping
     default void toMovieDTOMapping(@MappingTarget MovieDTO movieDTO) {
+        System.out.println("FROM MAPPER " + movieDTO.getCategories().toString());
         if (movieDTO.getReviews() != null) {
             for (ReviewDTO reviewDTO : movieDTO.getReviews()) {
                 reviewDTO.setMovie(movieDTO);

@@ -11,7 +11,7 @@ import java.util.Set;
 @AllArgsConstructor
 @NoArgsConstructor
 @RequiredArgsConstructor
-@EqualsAndHashCode(callSuper = false)
+@EqualsAndHashCode(of = {"id", "name"}, callSuper = false)
 public class MovieBaseDTO {
     private Long id;
     @NonNull
