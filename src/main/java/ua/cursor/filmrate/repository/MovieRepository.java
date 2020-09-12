@@ -5,7 +5,9 @@ import org.springframework.data.jpa.repository.Query;
 import ua.cursor.filmrate.entity.Movie;
 
 public interface MovieRepository extends JpaRepository<Movie, Long> {
-    @Query("from Movie as m left join fetch m.reviews where m.id =:id")
+    @Query("from Movie as m left join fetch m.categories where m.id =:id")
     Movie getById(long id);
 
+    @Query("from Movie as m left join fetch m.categories left join fetch m.reviews where m.id =:id")
+    Movie getByIdWithReviews(long id);
 }

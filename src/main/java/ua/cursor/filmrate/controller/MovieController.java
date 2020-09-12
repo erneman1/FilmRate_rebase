@@ -5,6 +5,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import ua.cursor.filmrate.dto.MovieDTO;
+import ua.cursor.filmrate.dto.ReviewDTO;
 import ua.cursor.filmrate.dto.base.MovieBaseDTO;
 import ua.cursor.filmrate.entity.Movie;
 import ua.cursor.filmrate.service.MovieService;
@@ -48,12 +49,27 @@ public class MovieController {
 
     @GetMapping("/{id}")
     public MovieDTO getMovieById(@PathVariable long id) {
-        return movieService.getMovieById(id);
+        return movieService.getMovieByIdWithReviews(id);
     }
 
     @GetMapping("/{id}/rate/{rate}")
-    public String addRate(Model model, @PathVariable("id") Long id, @PathVariable("rate") Double rate) {
-        movieService.addRate(rate, id);
+    public String addRate(@PathVariable("id") Long id, @PathVariable("rate") Double rate) {
+        movieService.addRate(id, rate);
+        return "redirect:/movies";
+    }
+
+    @PostMapping("/add-review")
+    public String addReview(Model model) {
+        model.addAttribute("review", new ReviewDTO());
+        return "redirect:/movies";
+    }
+
+    @PostMapping("/{id}/add-review")
+    public String saveReview(Model model, @PathVariable("id") Long id, ReviewDTO reviewDTO) {
+        MovieDTO movieDTO = new MovieDTO();
+        movieDTO.setId(id);
+        reviewDTO.setMovie(movieDTO);
+        movieService.saveReview(reviewDTO);
         return "redirect:/movies";
     }
 
@@ -63,8 +79,8 @@ public class MovieController {
     }
 
     @GetMapping("/details")
-    public String getDetails(@RequestParam(value = "id")  long id, Model model){
-        MovieDTO movieDTO = (movieService.getMovieById(id));
+    public String getDetails(@RequestParam(value = "id") long id, Model model) {
+        MovieDTO movieDTO = movieService.getMovieByIdWithReviews(id);
         model.addAttribute("movie", movieDTO);
         model.addAttribute("categories", movieDTO.getCategories());
         model.addAttribute("reviews", movieDTO.getReviews());

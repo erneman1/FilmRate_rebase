@@ -1,8 +1,7 @@
 package ua.cursor.filmrate.entity;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import lombok.*;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -11,9 +10,12 @@ import java.util.List;
 import java.util.Set;
 
 @Data
+@EqualsAndHashCode(of = {"id", "name"})
 @NoArgsConstructor
+@ToString(of = {"id", "name", "director", "description", "rate", "categories"})
 @AllArgsConstructor
 @Entity
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class Movie {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
