@@ -29,7 +29,7 @@
     </div>
 
     <div class="row pt-2 pb-2 mt-3 bg-light rounded shadow" th:each="movie : ${movies}">
-        <a  th:href="@{/movies/details(id=${movie.id})}" class="col">
+        <a  th:href="@{/movies/{id}(id=${movie.id})}" class="col-11">
             <h4 th:text="${movie.name}"></h4>
             <h6 th:text="${movie.director}"></h6>
             <p th:text="${movie.description}"></p>
@@ -41,11 +41,8 @@
                 <span class="navbar-toggler-icon"></span>
             </button>
         </a>
-        <div class="col align-items-end">
-<!--            <a class="btn btn-danger" onclick="if (!(confirm('Delete the movie?'))) return false"-->
-<!--               th:href="@{/movies/${movie.id}}">-->
-<!--                Delete</a>-->
-            <form action="#" th:action="@{/movies/delete/{id}(id=${movie.id})}" th:method="post">
+        <div class="d-flex flex-column align-items-end justify-content-center">
+            <form class="align-items-end" action="#" th:action="@{/movies/delete/{id}(id=${movie.id})}" th:method="post">
                 <input type="submit" value="Delete" class="btn btn-danger">
             </form>
         </div>
