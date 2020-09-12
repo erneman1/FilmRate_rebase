@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Film Rate</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="stylesheet" href="../static/css/bootstrap.css">
+</head>
+<body style="background: url(https://img3.goodfon.com/wallpaper/nbig/5/41/apple-textures-fon-tekstura.jpg)">
+<div class="container">
+
+    <div class="row">
+        <div class="col-11" th:object="${movie}">
+            <h2 th:text="*{name}"></h2>
+            <p th:text="*{director}"></p>
+            <p th:text="*{description}"></p>
+            <p th:text="*{rate}"></p>
+        </div>
+    </div>
+
+    <div class="col-1" th:each="categorie : ${categories}">
+        <p th:text="${categorie.name}"></p>
+        </d
+    </div>
+</div>
+
+
+<!--JavaScript-->
+<script src="../static/js/bootstrap.bundle.js"></script>
+</body>
+</html>

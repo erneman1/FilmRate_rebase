@@ -9,6 +9,7 @@ import ua.cursor.filmrate.entity.Rate;
 import ua.cursor.filmrate.repository.MovieRepository;
 import ua.cursor.filmrate.service.mapper.MovieMapper;
 
+import javax.annotation.PostConstruct;
 import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;

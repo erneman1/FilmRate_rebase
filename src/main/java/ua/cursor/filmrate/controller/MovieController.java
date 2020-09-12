@@ -33,8 +33,9 @@ public class MovieController {
         return "redirect:/movies";
     }
 
-    @DeleteMapping("/{id}")
-    public String deleteMovie(@RequestParam("id") long id) {
+    @PostMapping("/delete/{id}")
+    public String deleteMovie(@PathVariable long id) {
+        System.out.println(id);
         movieService.delete(id);
         return "redirect:/movies";
     }
@@ -59,6 +60,16 @@ public class MovieController {
     @GetMapping("/rating")
     public List<MovieBaseDTO> getAllSortedByRate() {
         return movieService.getAllMoviesSortedByRating();
+    }
+
+    @GetMapping("/details")
+    public String getDetails(@RequestParam(value = "id")  long id, Model model){
+        MovieDTO movieDTO = (movieService.getMovieById(id));
+        model.addAttribute("movie", movieDTO);
+        model.addAttribute("categories", movieDTO.getCategories());
+        model.addAttribute("reviews", movieDTO.getReviews());
+
+        return "details";
     }
 
 }
