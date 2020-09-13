@@ -11,7 +11,7 @@ import java.util.Set;
 @NoArgsConstructor
 @AllArgsConstructor
 @Data
-@ToString(of = "", callSuper = true)
+@ToString(callSuper = true)
 public class CategoryDTO extends CategoryBaseDTO {
     @JsonIgnore
     private Set<MovieDTO> movies = new HashSet<>();

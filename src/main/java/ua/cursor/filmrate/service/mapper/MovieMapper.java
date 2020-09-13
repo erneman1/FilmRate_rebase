@@ -3,11 +3,9 @@ package ua.cursor.filmrate.service.mapper;
 import org.mapstruct.*;
 import ua.cursor.filmrate.dto.CategoryDTO;
 import ua.cursor.filmrate.dto.MovieDTO;
-import ua.cursor.filmrate.dto.ReviewDTO;
 import ua.cursor.filmrate.dto.base.MovieBaseDTO;
 import ua.cursor.filmrate.entity.Category;
 import ua.cursor.filmrate.entity.Movie;
-import ua.cursor.filmrate.entity.Review;
 
 import java.util.List;
 
@@ -30,11 +28,6 @@ MovieDTO toMovieDTO(Movie movie);
     @AfterMapping
     default void toMovieDTOMapping(@MappingTarget MovieDTO movieDTO) {
         System.out.println("FROM MAPPER " + movieDTO.getCategories().toString());
-        if (movieDTO.getReviews() != null) {
-            for (ReviewDTO reviewDTO : movieDTO.getReviews()) {
-                reviewDTO.setMovie(movieDTO);
-            }
-        }
         if (movieDTO.getCategories() != null) {
             for (CategoryDTO categoryDTO : movieDTO.getCategories()) {
                 categoryDTO.getMovies().add(movieDTO);
@@ -52,11 +45,6 @@ MovieDTO toMovieDTO(Movie movie);
 
     @AfterMapping
     default void toMovieMapping(@MappingTarget Movie movie) {
-        if (movie.getReviews() != null) {
-            for (Review review : movie.getReviews()) {
-                review.setMovie(movie);
-            }
-        }
         if (movie.getCategories() != null) {
             for (Category category : movie.getCategories()) {
                 category.getMovies().add(movie);

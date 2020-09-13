@@ -60,13 +60,10 @@ public class MovieController {
         return "review_form";
     }
 
-    @PostMapping("/{id}/add-review")
-    public String saveReview(@PathVariable("id") Long id, ReviewDTO reviewDTO) {
-        MovieDTO movieDTO = new MovieDTO();
-        movieDTO.setId(id);
-        reviewDTO.setMovie(movieDTO);
-        movieService.saveReview(reviewDTO);
-        return "redirect:/movies/" + id;
+    @PostMapping("/{movieId}/add-review")
+    public String saveReview(@PathVariable("movieId") Long movieId, ReviewDTO reviewDTO) {
+        movieService.saveReview(movieId, reviewDTO);
+        return "redirect:/movies/" + movieId;
     }
 
     @GetMapping("/rating")
@@ -75,7 +72,7 @@ public class MovieController {
     }
 
     @GetMapping("/{id}")
-    public String getMovieById(@PathVariable(value = "id")  long id, Model model){
+    public String getMovieById(@PathVariable(value = "id") long id, Model model) {
         MovieDTO movieDTO = (movieService.getMovieByIdWithReviews(id));
         model.addAttribute("movie", movieDTO);
         model.addAttribute("categories", movieDTO.getCategories());

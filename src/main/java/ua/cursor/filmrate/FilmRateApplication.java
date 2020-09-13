@@ -37,7 +37,6 @@ public class FilmRateApplication {
         review.setId(1l);
         review.setLiked(true);
         review.setMessage("bla bla bla");
-        review.setMovie(movie);
         category.setId(1L);
         category.setName("Test");
         category.setMovies(Set.of(movie));

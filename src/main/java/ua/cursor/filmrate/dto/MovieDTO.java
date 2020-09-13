@@ -15,5 +15,4 @@ import java.util.List;
 @NoArgsConstructor
 public class MovieDTO extends MovieBaseDTO {
     private List<ReviewDTO> reviews = new ArrayList<>();
-
 }
