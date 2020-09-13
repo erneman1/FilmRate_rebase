@@ -34,7 +34,7 @@ public class FilmRateApplication {
         Movie movie = new Movie();
         Review review = new Review();
         Category category = new Category();
-        review.setId(1l);
+        review.setId(1L);
         review.setLiked(true);
         review.setMessage("bla bla bla");
         category.setId(1L);
@@ -44,7 +44,7 @@ public class FilmRateApplication {
         movie.setName("Test");
         movie.setDirector("TEST");
         movie.setDescription("TEST");
-        movie.setRate(new Rate(1l, 15l, 9.0d));
+        movie.setRate(new Rate(1L, 15L, 9.0d));
         movie.setReviews(List.of(review));
         movie.setCategories(Set.of(category));
         movieRepository.save(movie);

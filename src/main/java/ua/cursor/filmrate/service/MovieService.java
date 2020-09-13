@@ -2,16 +2,11 @@ package ua.cursor.filmrate.service;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
-import ua.cursor.filmrate.dto.MovieDTO;
-import ua.cursor.filmrate.dto.ReviewDTO;
-import ua.cursor.filmrate.dto.base.MovieBaseDTO;
+import ua.cursor.filmrate.entity.Category;
 import ua.cursor.filmrate.entity.Movie;
 import ua.cursor.filmrate.entity.Rate;
+import ua.cursor.filmrate.entity.Review;
 import ua.cursor.filmrate.repository.MovieRepository;
-import ua.cursor.filmrate.repository.ReviewRepository;
-import ua.cursor.filmrate.service.mapper.MovieMapper;
-import ua.cursor.filmrate.service.mapper.ReviewMapper;
 
 import java.util.Comparator;
 import java.util.List;
@@ -22,41 +17,41 @@ import java.util.stream.Collectors;
 public class MovieService {
 
     private final MovieRepository movieRepository;
-    private final ReviewRepository reviewRepository;
-    private final MovieMapper movieMapper;
-    private final ReviewMapper reviewMapper;
+    private final CategoryService categoryService;
 
-    public List<MovieBaseDTO> getAllMovies() {
-        return movieMapper.toMovieBaseDTOs(movieRepository.findAll());
+    public List<Movie> getAllMovies() {
+        return movieRepository.findAll();
     }
 
-    public List<MovieBaseDTO> getAllMoviesSortedByRating() {
-        return movieMapper.toMovieBaseDTOs(
-                movieRepository.findAll().stream()
-                        .sorted(Comparator.comparing((Movie movie) -> movie.getRate().getRateValue()).reversed())
-                        .collect(Collectors.toList())
-        );
+    public List<Movie> getAllMoviesSortedByRating() {
+        return movieRepository.findAll().stream()
+                .sorted(Comparator.comparing((Movie movie) -> movie.getRate().getRateValue()).reversed())
+                .collect(Collectors.toList());
     }
 
-    public MovieDTO getMovieByIdWithReviews(long id) {
-        Movie movie = movieRepository.getByIdWithReviews(id);
-        System.out.println("FROM SERVICE BEFORE MAPPER " + movie.toString());
-        return movieMapper.toMovieDTO(movie);
+    public Movie getMovieByIdWithReviews(long id) {
+        return movieRepository.getByIdWithReviews(id);
     }
 
     public void save(Movie movie) {
         movieRepository.save(movie);
     }
 
-    @Transactional
-    public void saveReview(Long movie_Id, ReviewDTO reviewDTO) {
-        Movie movie = movieRepository.getByIdWithReviews(movie_Id);
-        movie.getReviews().add(reviewMapper.toReviewEntityFromDTO(reviewDTO));
-        movieRepository.save(movie);
-    }
-
     public void delete(long id) {
         movieRepository.deleteById(id);
+    }
+
+    public void addReview(Long movieId, Review review) {
+        Movie movie = movieRepository.getByIdWithReviews(movieId);
+        movie.getReviews().add(review);
+        save(movie);
+    }
+
+    public void addCategory(Long movieId, Long categoryId) {
+        Movie movie = movieRepository.getById(movieId);
+        Category category = categoryService.getById(categoryId);
+        movie.addCategory(category);
+        save(movie);
     }
 
     public void addRate(Long movieId, Double rateValue) {
@@ -75,6 +70,4 @@ public class MovieService {
         rate.setVotesCount(votesCount);
         movieRepository.save(movie);
     }
-
 }
-
