@@ -2,6 +2,7 @@ package ua.cursor.filmrate.service;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import ua.cursor.filmrate.dto.MovieDTO;
 import ua.cursor.filmrate.dto.ReviewDTO;
 import ua.cursor.filmrate.dto.base.MovieBaseDTO;
@@ -47,9 +48,11 @@ public class MovieService {
         movieRepository.save(movie);
     }
 
-    public void saveReview(ReviewDTO reviewDTO) {
-        System.out.println(reviewDTO.toString());
-        reviewRepository.save(reviewMapper.toReviewEntityFromDTO(reviewDTO));
+    @Transactional
+    public void saveReview(Long movie_Id, ReviewDTO reviewDTO) {
+        Movie movie = movieRepository.getByIdWithReviews(movie_Id);
+        movie.getReviews().add(reviewMapper.toReviewEntityFromDTO(reviewDTO));
+        movieRepository.save(movie);
     }
 
     public void delete(long id) {
@@ -60,7 +63,7 @@ public class MovieService {
         Movie movie = movieRepository.getById(movieId);
         Rate rate = movie.getRate();
         System.out.println("Rate Value " + rateValue);
-        Double rateFromDB = rate.getRateValue() == null ? 0 : rate.getRateValue();
+        Double rateFromDB = rate.getRateValue() != null ? rate.getRateValue() : 0;
         System.out.println("Rate from DB " + rateFromDB);
         Long votesCount = rate.getVotesCount() == null ? 0 : rate.getVotesCount();
         System.out.println("Votes Count " + votesCount);

@@ -1,7 +1,7 @@
 package ua.cursor.filmrate.entity;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.*;
+import org.hibernate.annotations.DynamicUpdate;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -15,7 +15,7 @@ import java.util.Set;
 @ToString(of = {"id", "name", "director", "description", "rate", "categories"})
 @AllArgsConstructor
 @Entity
-@JsonIgnoreProperties(ignoreUnknown = true)
+@DynamicUpdate
 public class Movie {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -28,10 +28,11 @@ public class Movie {
     @JoinColumn(name = "rate_id")
     private Rate rate = new Rate();
 
-    @OneToMany(mappedBy = "movie",
-            cascade = CascadeType.ALL,
+    @OneToMany(cascade = {CascadeType.MERGE, CascadeType.REFRESH},
             fetch = FetchType.LAZY,
             orphanRemoval = true)
+    @JoinTable(name = "movie_reviews", joinColumns = {@JoinColumn(name = "movie_id")},
+            inverseJoinColumns = {@JoinColumn(name = "review_id")})
     private List<Review> reviews = new ArrayList<>();
 
 

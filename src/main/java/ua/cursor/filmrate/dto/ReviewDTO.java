@@ -11,8 +11,6 @@ import lombok.*;
 public class ReviewDTO {
     private Long id;
     @NonNull
-    private MovieDTO movie;
-    @NonNull
     private String message;
     @NonNull
     private Boolean liked;
