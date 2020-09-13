@@ -9,7 +9,7 @@
 <body style="background: url(https://img3.goodfon.com/wallpaper/nbig/5/41/apple-textures-fon-tekstura.jpg)">
 <div class="container">
 
-    <nav class="row p-2 bg-light position-sticky">
+    <nav class="row p-2 border border-light rounded" style="background-color: #4e555b; opacity: 0.8">
         <ul class="nav nav-pills">
             <li class="nav-item">
                 <a class="nav-link active" href="#">Home</a>
@@ -20,7 +20,7 @@
         </ul>
     </nav>
 
-    <div class="row p-2 bg-light position-static">
+    <div class="row p-2">
         <ul class="nav nav-pills">
             <li class="nav-item">
                 <a class="nav-link" th:href="@{/rating}">Sort by rating</a>
@@ -28,23 +28,27 @@
         </ul>
     </div>
 
-    <div class="row pt-2 pb-2 mt-3 bg-light rounded shadow" th:each="movie : ${movies}">
-        <a  th:href="@{/movies/{id}(id=${movie.id})}" class="col-11">
-            <h4 th:text="${movie.name}"></h4>
-            <h6 th:text="${movie.director}"></h6>
+    <div class="row pt-2 pb-2 mt-3 border border-light rounded" style="background-color: #486180"
+         th:each="movie : ${movies}">
+        <a th:href="@{/movies/{id}(id=${movie.id})}" class="col-11 text-light text-decoration-none">
+            <h4 th:text="${movie.name}">A WHITE, WHITE DAY</h4>
+            <h5 class="mb-5">
+                <small>Director: </small>[[${movie.director}]]
+            </h5>
             <p th:text="${movie.description}"></p>
-            <h3 th:text="${movie.rate.rateValue}"></h3>
-            <h4 th:text="${movie.rate.votesCount}"></h4>
-            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive"
-                    aria-controls="navbarResponsive"
-                    aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
+            <h4 class="text-right" th:text="${movie.rate.rateValue}"></h4>
+            <h4 class="text-right" th:text="${movie.rate.votesCount}"></h4>
         </a>
-        <div class="d-flex flex-column align-items-end justify-content-center">
-            <form class="align-items-end" action="#" th:action="@{/movies/delete/{id}(id=${movie.id})}" th:method="post">
-                <input type="submit" value="Delete" class="btn btn-danger">
-            </form>
+
+        <div class="col-1 btn">
+            <div class="btn-group-vertical">
+                <a class="btn btn-info mb-1">Edit</a>
+                <form class="align-items-end" action="#" th:action="@{/movies/delete/{id}(id=${movie.id})}"
+                      th:method="post">
+                    <input type="submit" value="Delete" class="btn btn-danger">
+                </form>
+            </div>
+
         </div>
     </div>
 </div>

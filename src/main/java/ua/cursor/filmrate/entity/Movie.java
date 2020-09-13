@@ -22,6 +22,7 @@ public class Movie {
     private Long id;
     private String name;
     private String director;
+    @Column(length = 3000)
     private String description;
 
     @OneToOne(orphanRemoval = true, cascade = CascadeType.ALL)

@@ -11,18 +11,18 @@
     <nav class="row p-2 bg-light position-sticky">
         <ul class="nav nav-pills">
             <li class="nav-item">
-                <a class="nav-link active" href="#">Home</a>
+                <a class="nav-link active" th:href="@{/movies}">Home</a>
             </li>
         </ul>
     </nav>
 
     <div class="row">
-        <div class="col p-0 d-flex justify-content-center flex-column align-items-center text-light" th:object="${movie}">
-<!--            <img src="https://thumbs.dfs.ivi.ru/storage2/contents/d/b/714650fedeadc35ccef275393bbb80.jpg" class="col-12 p-0 mb-2">-->
-            <h1 th:text="*{name}">Вторая жизнь Уве</h1>
-            <p th:text="*{director}">Режиссер: Hannes Holm</p>
-            <h1 th:text="*{rate}"><span class="text-">Rating  </span> 8,7</h1>
-            <p th:text="*{description}" class="mt-5 text-justify">Экранизация бестселлера Фредерика Бакмана, созданная шведскими кинематографистами, подкупает своеобразным скандинавским юмором и заставляет задуматься о самых серьезных вещах: терпимости, толерантности и других общечеловеческих ценностях. После смерти горячо любимой жены Уве Линдал превратился в законченного мизантропа. Старый ворчун и зануда изводит придирками всех окружающих. Малейший непорядок его жутко раздражает: брошенный окурок, криво припаркованный автомобиль, оставленный где попало велосипед, неотсортированный мусор, раскиданные в песочнице игрушки, приблудная кошка, неплотно запертые ворота, гадящий на тротуарную плитку песик. Новое поколение Уве считает легкомысленными идиотами, жизнь потеряла для него всякий смысл, он уже готов свести с ней счеты. Однако суицидальные планы Уве рушатся с появлением новых соседей. Шумное семейство вынуждает Уве снова искать общий язык с миром. Сумеет ли старик справиться со своими обидами, если его многочисленные таланты – аккуратность, обстоятельность, рукастость – будут опять востребованы? Возможно, у него даже получится начать новую жизнь.</p>
+        <div class="col text-light" th:object="${movie}">
+            <h1 th:text="*{name}"></h1>
+            <h4><small>Director: </small>[[${movie.director}]]</h4>
+            <h5><small>Rating: </small>[[${movie.rate.rateValue}]]</h5>
+            <h5><small>Votes: </small>[[${movie.rate.votesCount}]]</h5>
+            <p th:text="*{description}" class="mt-5 text-justify"></p>
         </div>
     </div>
 
