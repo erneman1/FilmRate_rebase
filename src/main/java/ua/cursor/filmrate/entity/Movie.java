@@ -28,13 +28,13 @@ public class Movie {
     @JoinColumn(name = "rate_id")
     private Rate rate = new Rate();
 
-    @OneToMany(cascade = {CascadeType.MERGE, CascadeType.REFRESH},
-            fetch = FetchType.LAZY,
+    @OneToMany(cascade = CascadeType.ALL,
             orphanRemoval = true)
-    @JoinTable(name = "movie_reviews", joinColumns = {@JoinColumn(name = "movie_id")},
+    @JoinTable(name = "movies_reviews",
+            joinColumns = {@JoinColumn(name = "movie_id")},
             inverseJoinColumns = {@JoinColumn(name = "review_id")})
+    @OrderColumn(name = "id")
     private List<Review> reviews = new ArrayList<>();
-
 
     @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REFRESH, CascadeType.DETACH},
             fetch = FetchType.LAZY)
@@ -44,4 +44,14 @@ public class Movie {
             inverseJoinColumns = {@JoinColumn(name = "category_id")}
     )
     private Set<Category> categories = new HashSet<>();
+
+    public void addCategory(Category category) {
+        this.categories.add(category);
+        category.getMovies().add(this);
+    }
+
+    public void removeCategory(Category category) {
+        this.categories.remove(category);
+        category.getMovies().remove(this);
+    }
 }

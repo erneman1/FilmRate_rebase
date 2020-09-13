@@ -1,35 +1,33 @@
 package ua.cursor.filmrate.service;
 
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-import ua.cursor.filmrate.dto.RoleDTO;
+import ua.cursor.filmrate.entity.Role;
 import ua.cursor.filmrate.repository.RoleRepository;
-import ua.cursor.filmrate.service.mapper.RoleMapper;
 
 import javax.annotation.PostConstruct;
 import java.util.Set;
 
 @Service
+@RequiredArgsConstructor
 public class RoleService {
 
     private final RoleRepository roleRepository;
-    private final RoleMapper roleMapper;
-
-    public RoleService(RoleRepository roleRepository, RoleMapper roleMapper) {
-        this.roleRepository = roleRepository;
-        this.roleMapper = roleMapper;
-    }
 
     @PostConstruct
     public void createRoles() {
-        RoleDTO roleAdmin = new RoleDTO("ADMIN");
-        RoleDTO roleUser = new RoleDTO("USER");
-        RoleDTO roleManager = new RoleDTO("MANAGER");
-        roleRepository.save(roleMapper.toRoleEntity(roleAdmin));
-        roleRepository.save(roleMapper.toRoleEntity(roleUser));
-        roleRepository.save(roleMapper.toRoleEntity(roleManager));
+        Role roleAdmin = new Role();
+        Role roleUser = new Role();
+        Role roleManager = new Role();
+        roleAdmin.setName("ADMIN");
+        roleUser.setName("USER");
+        roleManager.setName("MANAGER");
+        roleRepository.save(roleAdmin);
+        roleRepository.save(roleUser);
+        roleRepository.save(roleManager);
     }
 
-    public Set<RoleDTO> findAll() {
-        return roleMapper.toRoleDTOsFromRole(Set.copyOf(roleRepository.findAll()));
+    public Set<Role> findAll() {
+        return Set.copyOf(roleRepository.findAll());
     }
 }

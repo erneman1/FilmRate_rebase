@@ -1,10 +1,9 @@
 package ua.cursor.filmrate.service;
 
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import ua.cursor.filmrate.dto.RoleDTO;
-import ua.cursor.filmrate.dto.UserDTO;
-import ua.cursor.filmrate.dto.base.UserBaseDTO;
+import ua.cursor.filmrate.entity.Role;
 import ua.cursor.filmrate.entity.User;
 import ua.cursor.filmrate.repository.UserRepository;
 import ua.cursor.filmrate.service.mapper.UserMapper;
@@ -12,60 +11,56 @@ import ua.cursor.filmrate.service.mapper.UserMapper;
 import java.util.Set;
 
 @Service
+@RequiredArgsConstructor
 public class UserService {
 
     private final UserRepository userRepository;
     private final UserMapper userMapper;
     private final RoleService roleService;
 
-    public UserService(UserRepository userRepository, UserMapper userMapper, RoleService roleService) {
-        this.userRepository = userRepository;
-        this.userMapper = userMapper;
-        this.roleService = roleService;
-    }
 
-//    @PostConstruct
+    //    @PostConstruct
     @Transactional
     public void createUsers() {
-        Set<RoleDTO> roles = roleService.findAll();
+        Set<Role> roles = roleService.findAll();
 
-        UserDTO userDTO = new UserDTO();
-        userDTO.setName("Test");
-        userDTO.setPassword("");
-        userDTO.setUserRoles(roles);
+        User user = new User();
+        user.setName("Test");
+        user.setPassword("");
+        user.setUserRoles(roles);
 
-        UserDTO userDTO1 = new UserDTO();
-        userDTO1.setName("Test1");
-        userDTO1.setPassword("");
-        userDTO1.setUserRoles(roles);
+        User user1 = new User();
+        user1.setName("Test1");
+        user1.setPassword("");
+        user1.setUserRoles(roles);
 
-        UserDTO userDTO2 = new UserDTO();
-        userDTO2.setName("Test2");
-        userDTO2.setPassword("");
-        userDTO2.setUserRoles(roles);
+        User user2 = new User();
+        user2.setName("Test2");
+        user2.setPassword("");
+        user2.setUserRoles(roles);
 
-        UserDTO userDTO3 = new UserDTO();
-        userDTO3.setName("Test3");
-        userDTO3.setPassword("");
-        userDTO3.setUserRoles(roles);
+        User user3 = new User();
+        user3.setName("Test3");
+        user3.setPassword("");
+        user3.setUserRoles(roles);
 
-        userRepository.save(userMapper.toUserEntityFromDTO(userDTO));
-        userRepository.save(userMapper.toUserEntityFromDTO(userDTO1));
-        userRepository.save(userMapper.toUserEntityFromDTO(userDTO2));
-        userRepository.save(userMapper.toUserEntityFromDTO(userDTO3));
+        userRepository.save(user);
+        userRepository.save(user1);
+        userRepository.save(user2);
+        userRepository.save(user3);
 
         userRepository.findAllWithRoles().forEach(System.out::println);
     }
 
-    public void save(User user){
+    public void save(User user) {
         userRepository.save(user);
     }
 
-    public UserBaseDTO getBaseUserDTOById(long id){
-        return userMapper.toUserBaseDTO(userRepository.findById(id));
+    public User getBaseUserDTOById(long id) {
+        return userRepository.findById(id);
     }
 
-    public UserDTO getUserDTOById(long id){
-        return userMapper.toUserDTO(userRepository.findById(id));
+    public User getUserById(long id) {
+        return userRepository.findById(id);
     }
 }
