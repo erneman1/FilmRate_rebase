@@ -9,6 +9,7 @@ import ua.cursor.filmrate.entity.Review;
 import ua.cursor.filmrate.repository.MovieRepository;
 
 import java.util.Comparator;
+import java.util.HashSet;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -34,7 +35,11 @@ public class MovieService {
     }
 
     public void save(Movie movie) {
+        var categories = new HashSet<>(movie.getCategories());
+        movie.getCategories().clear();
         movieRepository.save(movie);
+        movie.setCategories(categories);
+        movieRepository.save(movie); //actually its an update
     }
 
     public void delete(long id) {

@@ -22,6 +22,9 @@
             <h4><small>Director: </small>[[${movie.director}]]</h4>
             <h5><small>Rating: </small>[[${movie.rate.rateValue}]]</h5>
             <h5><small>Votes: </small>[[${movie.rate.votesCount}]]</h5>
+            <div th:each="category : ${categories}">
+                <p th:text="${category.name}"></p>
+            </div>
             <p th:text="*{description}" class="mt-5 text-justify"></p>
         </div>
     </div>
