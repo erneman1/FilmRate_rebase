@@ -16,12 +16,6 @@ public class UserController {
     @Autowired
     UserService service;
 
-    @GetMapping("/get")
-    public String getUser(Model model){
-        model.addAttribute("usr", service.getBaseUserDTOById(1).getName());
-        return "home";
-    }
-
     @GetMapping("/registration")
     public String registration(Model model){
         model.addAttribute("user", new User());

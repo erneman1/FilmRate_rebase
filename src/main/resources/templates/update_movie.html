@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Film Rate</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="stylesheet" href="../static/css/bootstrap.css" th:href="@{/css/bootstrap.css}">
+</head>
+<body style="background: url(https://img3.goodfon.com/wallpaper/nbig/5/41/apple-textures-fon-tekstura.jpg)">
+<div class="container justify-content-center">
+
+    <nav class="container mb-5 mt-2">
+        <ul class="nav nav-pills">
+            <li class="nav-item">
+                <a class="nav-link" th:href="@{/movies}">Home</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link active" href="#">Add movie</a>
+            </li>
+        </ul>
+    </nav>
+
+    <div class="row">
+        <div class="container bg-light rounded mx-auto">
+            <h3 class="text-center">Movie editor</h3>
+
+            <form role="form" class="p-3" action="#" method="post" th:action="@{/movies/edit/{id}(id=${movie.id})}" th:object="${movie}">
+
+                <div class="form-group">
+                    <label for="name">Name</label>
+                    <input type="text" class="form-control" th:field="*{name}" id="name" placeholder="Enter name">
+                </div>
+
+                <div class="form-group">
+                    <label for="director">Director</label><br>
+                    <input type="text" class="form-control" th:field="*{director}" id="director"
+                           placeholder="Enter director">
+                </div>
+                <div>
+                    <label for="description" class="mt-2">Description</label>
+                    <textarea class="form-control" type="text" th:field="*{description}" id="description"
+                              placeholder="Enter description">
+                    </textarea>
+                </div>
+
+                <div class="row mt-5">
+                    <div class="col-3" th:each="category : ${categoriesAll}">
+                        <label>
+                            <input
+                                    type="checkbox" th:field="*{categories}"
+                                    th:value="${category.id}"
+                                    th:text="' ' + ${category.name}">
+                        </label>
+                    </div>
+                </div>
+
+                <input type="submit" value="Add movie" class="btn btn-info mt-5 mb-3 ">
+            </form>
+        </div>
+    </div>
+
+    <!--JavaScript-->
+    <script src="../static/js/bootstrap.bundle.js" th:href="@{/js/bootstrap.bundle.js}"></script>
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+            integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+            crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+            integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+            crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+            integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+            crossorigin="anonymous"></script>
+</div>
+</body>
+</html>

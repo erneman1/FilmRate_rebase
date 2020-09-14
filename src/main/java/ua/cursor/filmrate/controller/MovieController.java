@@ -52,11 +52,7 @@ public class MovieController {
         return "details";
     }
 
-    @PostMapping
-    public String saveMovie(@ModelAttribute("movieDTO") MovieDTO movieDTO) {
-        movieService.save(movieMapper.toMovieEntityFromDTO(movieDTO));
-        return "redirect:/movies";
-    }
+
 
     @GetMapping("/{id}/rate/{rate}")
     public String addRate(@PathVariable("id") Long id, @PathVariable("rate") Double rate) {
@@ -71,23 +67,7 @@ public class MovieController {
         return "redirect:/movies/" + movieId;
     }
 
-    @PostMapping("/delete/{id}")
-    public String deleteMovie(@PathVariable long id) {
-        System.out.println(id);
-        movieService.delete(id);
-        return "redirect:/movies";
-    }
 
-    @GetMapping("/add")
-    public String getAddMovieForm(Model model) {
-        model.addAttribute("movie", new MovieDTO());
-        model.addAttribute("categoriesAll",
-                categoryService.getAll()
-                        .stream()
-                        .map(categoryMapper::toCategoryDTO)
-                        .collect(Collectors.toList()));
-        return "add_movie";
-    }
 
     @GetMapping("/{movieId}/add-review")
     public String getReviewForm(@PathVariable long movieId, Model model) {
