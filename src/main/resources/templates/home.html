@@ -15,7 +15,7 @@
                 <a class="nav-link active" href="#">Home</a>
             </li>
             <li class="nav-item" sec:authorize="hasRole('ROLE_ADMIN')">
-                <a class="nav-link" th:href="@{/movies/add}">Add movie</a>
+                <a class="nav-link" th:href="@{/admin/movies/add}">Add movie</a>
             </li>
         </ul>
     </nav>
@@ -31,7 +31,7 @@
     <div class="row pt-2 pb-2 mt-3 border border-light rounded shadow" style="background-color: #4e555b"
          th:each="movie : ${movies}">
         <a class="col-11 col-md-11 col-sm-11 d-block text-light text-decoration-none" th:href="@{/movies/{id}(id=${movie.id})}">
-            <h4 th:text="${movie.name}">A WHITE, WHITE DAY<span sec:authentication="principal.authorities">[ROLE_USER, ROLE_ADMIN]</span></h4>
+            <h4 th:text="${movie.name}">A WHITE, WHITE DAY</h4>
             <h5 class="mb-5">
                 <small>Director: </small>[[${movie.director}]]
             </h5>
@@ -42,8 +42,8 @@
 
         <div class="col-1 col-md-1 col-sm-1" sec:authorize="hasRole('ROLE_ADMIN')">
             <div class="btn-group-vertical">
-                <a class="btn btn-info mb-1" th:href="@{/movies/edit/{id}(id=${movie.id})}">Edit</a>
-                <form class="align-items-end" action="#" th:action="@{/movies/delete/{id}(id=${movie.id})}"
+                <a class="btn btn-info mb-1" th:href="@{/admin/movies/edit/{id}(id=${movie.id})}">Edit</a>
+                <form class="align-items-end" action="#" th:action="@{/admin/movies/delete/{id}(id=${movie.id})}"
                       th:method="post">
                     <input type="submit" value="Delete" class="btn btn-danger">
                 </form>

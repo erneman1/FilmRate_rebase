@@ -14,7 +14,7 @@ import ua.cursor.filmrate.service.mapper.ReviewMapper;
 import java.util.stream.Collectors;
 
 @Controller
-@RequestMapping("/admin")
+@RequestMapping("/admin/movies")
 @RequiredArgsConstructor
 public class AdminController {
     private final MovieService movieService;
