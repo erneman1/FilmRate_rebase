@@ -81,7 +81,7 @@ public class MovieController {
     @GetMapping("/add")
     public String getAddMovieForm(Model model) {
         model.addAttribute("movie", new MovieDTO());
-        model.addAttribute("categories",
+        model.addAttribute("categoriesAll",
                 categoryService.getAll()
                         .stream()
                         .map(categoryMapper::toCategoryDTO)

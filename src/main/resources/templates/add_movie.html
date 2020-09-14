@@ -33,7 +33,8 @@
 
                 <div class="form-group">
                     <label for="director">Director</label><br>
-                    <input type="text" class="form-control" th:field="*{director}" id="director" placeholder="Enter director">
+                    <input type="text" class="form-control" th:field="*{director}" id="director"
+                           placeholder="Enter director">
                 </div>
                 <div>
                     <label for="description" class="mt-2">Description</label>
@@ -43,9 +44,12 @@
                 </div>
 
                 <div class="row mt-5">
-                    <div class="col-3" th:each="category : ${categories}">
+                    <div class="col-3" th:each="category : ${categoriesAll}">
                         <label>
-                            <input type="checkbox" th:field="${categories}" th:value="${category.id}" th:text="' ' + ${category.name}">
+                            <input
+                                    type="checkbox" th:field="*{categories}"
+                                    th:value="${category.id}"
+                                    th:text="' ' + ${category.name}">
                         </label>
                     </div>
                 </div>
@@ -57,9 +61,15 @@
 
     <!--JavaScript-->
     <script src="../static/js/bootstrap.bundle.js" th:href="@{/js/bootstrap.bundle.js}"></script>
-    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+            integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+            crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+            integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+            crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+            integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+            crossorigin="anonymous"></script>
 </div>
 </body>
 </html>

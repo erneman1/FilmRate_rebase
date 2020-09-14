@@ -4,7 +4,6 @@ import org.mapstruct.*;
 import ua.cursor.filmrate.dto.CategoryDTO;
 import ua.cursor.filmrate.dto.MovieDTO;
 import ua.cursor.filmrate.dto.base.MovieBaseDTO;
-import ua.cursor.filmrate.entity.Category;
 import ua.cursor.filmrate.entity.Movie;
 
 import java.util.List;
@@ -40,16 +39,18 @@ MovieDTO toMovieDTO(Movie movie);
     Movie toMovieEntityFromBaseDTO(MovieBaseDTO movieBaseDTO);
 
     @Mapping(target = "reviews", ignore = true)
-    @Mapping(target = "categories", ignore = true)
+    //@Mapping(target = "categories", ignore = true)
     Movie toMovieEntityFromDTO(MovieDTO movieDTO);
 
-    @AfterMapping
+
+
+    /*@AfterMapping
     default void toMovieMapping(@MappingTarget Movie movie) {
         if (movie.getCategories() != null) {
-            for (Category category : movie.getCategories()) {
+            /*for (Category category : movie.getCategories()) {
                 category.getMovies().add(movie);
-            }
-        }
-    }
+            }*/
+       // }
+    //}*/
 
 }
