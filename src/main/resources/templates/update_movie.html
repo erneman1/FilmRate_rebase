@@ -24,7 +24,7 @@
         <div class="container bg-light rounded mx-auto">
             <h3 class="text-center">Movie editor</h3>
 
-            <form role="form" class="p-3" action="#" method="post" th:action="@{/admin/movies}" th:object="${movie}">
+            <form role="form" class="p-3" action="#" method="post" th:action="@{/admin/movies/edit/{id}(id=${movie.id})}" th:object="${movie}">
 
                 <div class="form-group">
                     <label for="name">Name</label>

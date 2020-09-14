@@ -3,10 +3,10 @@ package ua.cursor.filmrate.entity;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.springframework.security.core.userdetails.UserDetails;
+import ua.cursor.filmrate.entity.enums.Role;
 
 import javax.persistence.*;
-import java.util.HashSet;
-import java.util.Set;
 
 @Entity
 @Data
@@ -20,9 +20,12 @@ public class User {
     private String name;
     private String login;
     private String password;
+    @Enumerated(EnumType.STRING)
+    private Role role;
 
-    @ManyToMany(cascade = {CascadeType.DETACH, CascadeType.REFRESH}, fetch = FetchType.LAZY)
-    @JoinTable(name = "user_roles", joinColumns = {@JoinColumn(name = "user_id")},
-            inverseJoinColumns = {@JoinColumn(name = "role_id")})
-    private Set<Role> userRoles = new HashSet<>();
+    public UserDetails getUserDetails(){
+        return new org.springframework.security.core.userdetails.User(
+                this.login, this.password, this.role.getAuthorities()
+        );
+    }
 }

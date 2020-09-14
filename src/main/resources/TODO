@@ -1,0 +1,9 @@
+/admin/movie/{id} POST - update info about movie
+
+/movie/rate POST - add rate to a movie
+
+/stats/rating GET - get movies list by rating (from highest / lowest optionally)
+
+/stats/category GET - get movies list by category
+
+SECURITY

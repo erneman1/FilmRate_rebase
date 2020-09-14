@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:form="http://www.w3.org/1999/xhtml">
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
     <title>Film Rate</title>
     <meta charset="UTF-8">
@@ -14,8 +14,8 @@
             <li class="nav-item">
                 <a class="nav-link active" href="#">Home</a>
             </li>
-            <li class="nav-item">
-                <a class="nav-link" th:href="@{/movies/add}">Add movie</a>
+            <li class="nav-item" sec:authorize="hasRole('ROLE_ADMIN')">
+                <a class="nav-link" th:href="@{/admin/movies/add}">Add movie</a>
             </li>
         </ul>
     </nav>
@@ -40,10 +40,10 @@
             <h4 class="text-right" th:text="${movie.rate.votesCount}"></h4>
         </a>
 
-        <div class="col-1 col-md-1 col-sm-1">
+        <div class="col-1 col-md-1 col-sm-1" sec:authorize="hasRole('ROLE_ADMIN')">
             <div class="btn-group-vertical">
-                <a class="btn btn-info mb-1">Edit</a>
-                <form class="align-items-end" action="#" th:action="@{/movies/delete/{id}(id=${movie.id})}"
+                <a class="btn btn-info mb-1" th:href="@{/admin/movies/edit/{id}(id=${movie.id})}">Edit</a>
+                <form class="align-items-end" action="#" th:action="@{/admin/movies/delete/{id}(id=${movie.id})}"
                       th:method="post">
                     <input type="submit" value="Delete" class="btn btn-danger">
                 </form>
