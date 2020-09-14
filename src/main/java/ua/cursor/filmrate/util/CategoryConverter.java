@@ -1,4 +1,4 @@
-package ua.cursor.filmrate.entity;
+package ua.cursor.filmrate.util;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.core.convert.converter.Converter;
