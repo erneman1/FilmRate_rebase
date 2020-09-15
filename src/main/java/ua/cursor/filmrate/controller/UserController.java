@@ -1,6 +1,6 @@
 package ua.cursor.filmrate.controller;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -11,19 +11,19 @@ import ua.cursor.filmrate.service.UserService;
 
 @Controller
 @RequestMapping("/user")
+@RequiredArgsConstructor
 public class UserController {
 
-    @Autowired
-    UserService service;
+    private final UserService service;
 
     @GetMapping("/registration")
-    public String registration(Model model){
+    public String registration(Model model) {
         model.addAttribute("user", new User());
         return "registration";
     }
 
     @PostMapping("/registration/save")
-    public String addUser(User user){
+    public String addUser(User user) {
         service.save(user);
         return "redirect:/";
     }

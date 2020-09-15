@@ -6,8 +6,8 @@ import lombok.*;
 @AllArgsConstructor
 @NoArgsConstructor
 @RequiredArgsConstructor
-@EqualsAndHashCode(of = {"id"}, callSuper = false)
-@ToString(of = {"id", "message", "liked"})
+@EqualsAndHashCode(of = "id")
+@ToString
 public class ReviewDTO {
     private Long id;
     @NonNull

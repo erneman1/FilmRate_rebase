@@ -12,6 +12,7 @@ import javax.persistence.Id;
 @AllArgsConstructor
 @NoArgsConstructor
 @RequiredArgsConstructor
+@EqualsAndHashCode(of = "id")
 @Entity
 public class Rate {
     @Id

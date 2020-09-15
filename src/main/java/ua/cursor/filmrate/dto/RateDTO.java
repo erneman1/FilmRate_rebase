@@ -6,6 +6,7 @@ import lombok.*;
 @AllArgsConstructor
 @NoArgsConstructor
 @RequiredArgsConstructor
+@EqualsAndHashCode(of = "id")
 public class RateDTO {
     private Long id;
     @NonNull
