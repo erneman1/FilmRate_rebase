@@ -9,9 +9,6 @@ import ua.cursor.filmrate.service.CategoryService;
 import ua.cursor.filmrate.service.MovieService;
 import ua.cursor.filmrate.service.mapper.CategoryMapper;
 import ua.cursor.filmrate.service.mapper.MovieMapper;
-import ua.cursor.filmrate.service.mapper.ReviewMapper;
-
-import java.util.stream.Collectors;
 
 @Controller
 @RequestMapping("/admin/movies")
@@ -22,7 +19,6 @@ public class AdminController {
 
     private final MovieMapper movieMapper;
     private final CategoryMapper categoryMapper;
-    private final ReviewMapper reviewMapper;
 
     @PostMapping
     public String saveMovie(@ModelAttribute("movieDTO") MovieDTO movieDTO) {
@@ -46,22 +42,14 @@ public class AdminController {
     @GetMapping("/add")
     public String getAddMovieForm(Model model) {
         model.addAttribute("movie", new MovieDTO());
-        model.addAttribute("categoriesAll",
-                categoryService.getAll()
-                        .stream()
-                        .map(categoryMapper::toCategoryDTO)
-                        .collect(Collectors.toList()));
+        model.addAttribute("categoriesAll", categoryMapper.toCategoryDTOs(categoryService.getAll()));
         return "add_movie";
     }
 
     @GetMapping("/edit/{id}")
-    public String getUpdateMovieForm(@PathVariable("id") long id,  Model model) {
+    public String getUpdateMovieForm(@PathVariable("id") long id, Model model) {
         model.addAttribute("movie", movieMapper.toMovieDTO(movieService.getMovieByIdWithReviews(id)));
-        model.addAttribute("categoriesAll",
-                categoryService.getAll()
-                        .stream()
-                        .map(categoryMapper::toCategoryDTO)
-                        .collect(Collectors.toList()));
+        model.addAttribute("categoriesAll", categoryMapper.toCategoryDTOs(categoryService.getAll()));
         return "update_movie";
     }
 }

@@ -2,14 +2,12 @@ package ua.cursor.filmrate.service;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-import ua.cursor.filmrate.entity.Category;
 import ua.cursor.filmrate.entity.Movie;
 import ua.cursor.filmrate.entity.Rate;
 import ua.cursor.filmrate.entity.Review;
 import ua.cursor.filmrate.repository.MovieRepository;
 
 import java.util.Comparator;
-import java.util.HashSet;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -35,10 +33,10 @@ public class MovieService {
     }
 
     public void save(Movie movie) {
-        var categories = new HashSet<>(movie.getCategories());
-        movie.getCategories().clear();
-        movieRepository.save(movie);
-        movie.setCategories(categories);
+//        var categories = new HashSet<>(movie.getCategories());
+//        movie.getCategories().clear();
+//        movieRepository.save(movie);
+//        movie.setCategories(categories);
         movieRepository.save(movie); //actually its an update
     }
 
@@ -49,13 +47,6 @@ public class MovieService {
     public void addReview(Long movieId, Review review) {
         Movie movie = movieRepository.getByIdWithReviews(movieId);
         movie.getReviews().add(review);
-        save(movie);
-    }
-
-    public void addCategory(Long movieId, Long categoryId) {
-        Movie movie = movieRepository.getById(movieId);
-        Category category = categoryService.getById(categoryId);
-        movie.addCategory(category);
         save(movie);
     }
 

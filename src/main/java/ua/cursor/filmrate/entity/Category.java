@@ -9,7 +9,7 @@ import java.util.Set;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-@EqualsAndHashCode(of = {"id", "name"}, callSuper = false)
+@EqualsAndHashCode(of = "id")
 @ToString(of = {"id", "name"})
 @Entity
 public class Category {
@@ -22,14 +22,4 @@ public class Category {
     @ManyToMany(mappedBy = "categories",
             cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.REFRESH})
     private Set<Movie> movies = new HashSet<>();
-
-    public void addMovie(Movie movie) {
-        this.movies.add(movie);
-        movie.getCategories().add(this);
-    }
-
-    public void removeMovie(Movie movie) {
-        this.movies.remove(movie);
-        movie.getCategories().remove(this);
-    }
 }
