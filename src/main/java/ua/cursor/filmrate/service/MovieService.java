@@ -33,11 +33,7 @@ public class MovieService {
     }
 
     public void save(Movie movie) {
-//        var categories = new HashSet<>(movie.getCategories());
-//        movie.getCategories().clear();
-//        movieRepository.save(movie);
-//        movie.setCategories(categories);
-        movieRepository.save(movie); //actually its an update
+        movieRepository.save(movie);
     }
 
     public void delete(long id) {

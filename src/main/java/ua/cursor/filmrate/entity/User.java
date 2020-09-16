@@ -22,10 +22,8 @@ public class User {
 
     private String name;
 
-    @Column(name = "login", unique = true, nullable = false)
     private String login;
 
-    @Column(name = "login", nullable = false)
     private String password;
 
     @Enumerated(EnumType.STRING)

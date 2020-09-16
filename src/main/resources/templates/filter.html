@@ -21,9 +21,9 @@
         <a th:href="@{/logout}" class="btn btn-primary float-right">LogOut</a>
     </nav>
 
-    <div id="contentWrapper" class="d-flex flex-column w-100" th:object="${movies}">
+    <div id="contentWrapper" class="d-flex flex-column w-100" th:object="${}">
 
-        <div id="sorting" class="d-flex flex-row text-light mt-5">
+        <div id="sorting" class="d-flex flex-column text-light mt-5">
 
             <form th:method="get" th:action="@{/movies/sorted}" class="d-flex flex-row">
 
@@ -31,13 +31,12 @@
                     <input type="submit" value="Sort by rating" class="btn btn-link form-control">
                 </div>
             </form>
-            <form th:method="get" th:action="@{/movies/category}">
+            <form th:method="post" th:action="@{}">
                 <div class="form-inline d-flex align-items-center">
                     <p class="mb-0 mr-3 ml-4 text-primary">Categories: </p>
                     <select th:field="${categories}" class="form-control">
-                        <option th:each="i : ${categories}"  th:value="${i.name}" th:text="${i.name}"></option>
+                        <option th:each="i : ${categories}" th:value="${i.name}" th:text="${i.name}"></option>
                     </select>
-                    <input type="submit" value="Check" class="btn btn-primary">
                 </div>
             </form>
 
