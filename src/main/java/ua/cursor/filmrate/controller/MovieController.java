@@ -6,14 +6,13 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import ua.cursor.filmrate.dto.MovieDTO;
 import ua.cursor.filmrate.dto.ReviewDTO;
-import ua.cursor.filmrate.dto.base.MovieBaseDTO;
-import ua.cursor.filmrate.entity.Movie;
+import ua.cursor.filmrate.entity.Category;
+import ua.cursor.filmrate.service.CategoryService;
 import ua.cursor.filmrate.service.MovieService;
 import ua.cursor.filmrate.service.mapper.MovieMapper;
 import ua.cursor.filmrate.service.mapper.ReviewMapper;
 
-import java.util.Comparator;
-import java.util.List;
+import java.util.stream.Collectors;
 
 @Controller
 @RequestMapping("/movies")
@@ -23,17 +22,19 @@ public class MovieController {
     private final MovieService movieService;
     private final MovieMapper movieMapper;
     private final ReviewMapper reviewMapper;
+    private final CategoryService categoryService;
 
     @GetMapping
-    public String getAllMoviesByFilter(Model model, @RequestParam(required = false, defaultValue = "asc", value = "orderBy") String orderBy) {
+    public String getAllMoviesByFilter(Model model) {
         model.addAttribute("movies", movieService.getAllMovies());
-        model.addAttribute("comparator", Comparator.comparing((Movie movie) -> movie.getRate().getRateValue()).reversed());
+        model.addAttribute("categories", categoryService.getAll());
         return "home";
     }
 
-    @GetMapping("/rating")
-    public List<MovieBaseDTO> getAllSortedByRate() {
-        return movieMapper.toMovieBaseDTOs(movieService.getAllMoviesSortedByRating());
+    @GetMapping("/sorted")
+    public String getAllMoviesSortedByRating(Model model) {
+        model.addAttribute("movies", movieMapper.toMovieBaseDTOs(movieService.getAllMoviesSortedByRating()));
+        return "sorted";
     }
 
     @GetMapping("/{id}")
@@ -53,6 +54,7 @@ public class MovieController {
 
     @PostMapping("/{movieId}/add-review")
     public String addReview(@PathVariable("movieId") Long movieId, ReviewDTO reviewDTO) {
+        System.out.println(reviewDTO.toString());
         movieService.addReview(movieId, reviewMapper.toReviewEntityFromDTO(reviewDTO));
         return "redirect:/movies/" + movieId;
     }
@@ -62,5 +64,16 @@ public class MovieController {
         model.addAttribute("review", new ReviewDTO());
         model.addAttribute("movie_id", movieId);
         return "review_form";
+    }
+
+    @GetMapping("/category")
+    public String getAllInCategory(@ModelAttribute("category") Category category, Model model){
+        model.addAttribute("moviesFiltered",
+                movieService.getAllMovies().stream()
+                        .filter(movie -> movie.getCategories().contains(category))
+                        .collect(Collectors.toList())
+        );
+        return "filter";
+
     }
 }

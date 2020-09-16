@@ -6,9 +6,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <link rel="stylesheet" href="../static/css/bootstrap.css" th:href="@{/css/bootstrap.css}">
 </head>
-<body style="background: url(https://img3.goodfon.com/wallpaper/nbig/5/41/apple-textures-fon-tekstura.jpg)">
-<div class="container">
-    <nav class="row p-2 bg-light position-sticky">
+<body style="background-image: url(https://wallpaperaccess.com/full/288727.jpg)">
+<div class="container p-0">
+    <nav class="row p-2 border border-light rounded" style="background-color: #4e555b">
         <ul class="nav nav-pills">
             <li class="nav-item">
                 <a class="nav-link active" th:href="@{/movies}">Home</a>
@@ -16,23 +16,35 @@
         </ul>
     </nav>
 
-    <div class="row">
-        <div class="col text-light" th:object="${movie}">
+    <div>
+        <div class="d-flex flex-column text-light align-items-center w-100" th:object="${movie}">
             <h1 th:text="*{name}"></h1>
             <h4><small>Director: </small>[[${movie.director}]]</h4>
-            <h5><small>Rating: </small>[[${movie.rate.rateValue}]]</h5>
-            <h5><small>Votes: </small>[[${movie.rate.votesCount}]]</h5>
-            <div th:each="category : ${categories}">
-                <p th:text="${category.name}"></p>
+            <div class="d-flex flex-row justify-content-between">
+                <h5 class="mr-4"><small>Rating: </small>[[${movie.rate.rateValue}]]</h5>
+                <h5><small>Votes: </small>[[${movie.rate.votesCount}]]</h5>
             </div>
-            <p th:text="*{description}" class="mt-5 text-justify"></p>
+
+            <div class="d-flex flex-row justify-content-around">
+                <div th:each="category : ${categories}">
+                    <p class="mr-2 ml-2" th:text="${category.name}"></p>
+                </div>
+            </div>
+            <div class="w-100">
+                <h3>Description:</h3>
+                <p th:text="*{description}" class="p-3 text-justify border border-light rounded"
+                   style="background-color: #4e555b"></p>
+            </div>
         </div>
     </div>
 
-    <h3 class="text-light">Reviews:</h3>
-    <div th:each="review : ${reviews}" class="row bg-light rounded-lg text-left mb-3">
-        <p th:text="${review.message}" class="p-0 m-3"></p>
+    <div class="d-flex flex-column p-3 border border-light rounded bg-secondary" th:if="${!reviews.isEmpty()}">
+        <h3 class="text-light">Reviews:</h3>
+        <div th:each="review : ${reviews}" class="bg-light m-2 rounded-lg text-left">
+            <p th:text="${review.message}" class="p-0 m-3"></p>
+        </div>
     </div>
+
 </div>
 
 <div class="container p-0 fixed-bottom mb-3">

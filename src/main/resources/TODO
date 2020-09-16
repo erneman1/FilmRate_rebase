@@ -1,9 +1,10 @@
-/admin/movie/{id} POST - update info about movie
+
 
 /movie/rate POST - add rate to a movie
 
-/stats/rating GET - get movies list by rating (from highest / lowest optionally)
-
 /stats/category GET - get movies list by category
 
-SECURITY
+
+Star yelow - https://cdn.iconscout.com/icon/free/png-256/star-bookmark-favorite-shape-rank-like-32386.png
+
+Star empty - https://icons-for-free.com/iconfiles/png/512/favorite+favourite+premium+rate+rating+star+icon-1320166547676710135.png

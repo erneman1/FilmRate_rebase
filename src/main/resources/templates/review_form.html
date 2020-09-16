@@ -9,22 +9,30 @@
 <body style="background: url(https://img3.goodfon.com/wallpaper/nbig/5/41/apple-textures-fon-tekstura.jpg)">
 <div class="container">
 
-    <nav class="row p-2 bg-light position-sticky">
+    <nav class="p-2 border border-light rounded" style="background-color: #4e555b">
         <ul class="nav nav-pills">
             <li class="nav-item">
-                <a class="nav-link active" href="#">Home</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" th:href="@{/movies/add}">Add movie</a>
+                <a class="nav-link active" th:href="@{/movies}">Home</a>
             </li>
         </ul>
     </nav>
 
-    <form action="#" th:action="@{/movies/{id}/add-review(id=${movie_id})}" method="post" th:object="${review}">
-        <div th:text="${review}" class="text-light"></div>
-        <input type="text" th:field="*{message}">
-        <input type="submit" value="ADD" class="btn btn-info">
-    </form>
+   <div id="formWrapper" style="background-color: #d6d4d5" class="border border-light mt-2 p-3 h-100">
+
+       <h3 class="mt-3 text-dark">Enter your review:</h3>
+
+       <form role="form" action="#" th:action="@{/movies/{id}/add-review(id=${movie_id})}" method="post">
+           <div class="form-group mt-3">
+               <textarea class="form-control rounded" rows="10"></textarea>
+           </div>
+           <div class="form-group">
+               <input type="submit" value="Send review" class="form-control btn btn-info">
+           </div>
+
+       </form>
+
+   </div>
+
 
 </div>
 
@@ -32,3 +40,6 @@
 <script src="../static/js/bootstrap.bundle.js" th:href="@{/js/bootstrap.bundle.js}"></script>
 </body>
 </html>
+
+
+
