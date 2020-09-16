@@ -20,6 +20,9 @@ public interface CategoryMapper {
     @Mapping(target = "movies", ignore = true)
     Category toCategoryEntityFromBaseDTO(CategoryBaseDTO categoryBaseDTO);
 
+    @IterableMapping(elementTargetType = Category.class)
+    List<Category> toCategoryEntitiesFromBaseDTOs(List<CategoryBaseDTO> categoryBaseDTO);
+
     @Mapping(target = "movies", ignore = true)
     Category toCategoryEntityFromDTO(CategoryDTO categoryDTO);
 
