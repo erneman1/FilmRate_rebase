@@ -3,6 +3,7 @@ package ua.cursor.filmrate;
 import lombok.RequiredArgsConstructor;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 import ua.cursor.filmrate.entity.Category;
@@ -10,12 +11,13 @@ import ua.cursor.filmrate.entity.Movie;
 import ua.cursor.filmrate.entity.Rate;
 import ua.cursor.filmrate.entity.User;
 import ua.cursor.filmrate.entity.enums.Role;
-import ua.cursor.filmrate.service.CategoryService;
-import ua.cursor.filmrate.service.MovieService;
-import ua.cursor.filmrate.service.UserService;
+import ua.cursor.filmrate.repository.CategoryRepository;
+import ua.cursor.filmrate.repository.MovieRepository;
+import ua.cursor.filmrate.repository.UserRepository;
 
 import javax.annotation.PostConstruct;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.Set;
 
 @SpringBootApplication
@@ -24,17 +26,18 @@ import java.util.Set;
 @RequiredArgsConstructor
 public class FilmRateApplication {
 
-    private final UserService userService;
-    private final MovieService movieService;
-    private final CategoryService categoryService;
+    private final UserRepository userRepository;
+    private final MovieRepository movieRepository;
+    private final CategoryRepository categoryRepository;
 
     public static void main(String[] args) {
         SpringApplication.run(FilmRateApplication.class, args);
     }
 
     @PostConstruct
+    @ConditionalOnProperty(name = "createAll", matchIfMissing = true, havingValue = "true")
     void aaa() {
-        userService.save(new User(
+        userRepository.save(new User(
                 null,
                 "user",
                 "user",
@@ -42,7 +45,7 @@ public class FilmRateApplication {
                 Role.ROLE_ADMIN
         ));
 
-        userService.save(new User(
+        userRepository.save(new User(
                 null,
                 "admin",
                 "admin",
@@ -50,8 +53,18 @@ public class FilmRateApplication {
                 Role.ROLE_USER
         ));
 
+        categoryRepository.save(new Category(null, "Horror", new HashSet<>()));
+        categoryRepository.save(new Category(null, "Detective", new HashSet<>()));
+        categoryRepository.save(new Category(null, "Drama", new HashSet<>()));
+        categoryRepository.save(new Category(null, "Comedy", new HashSet<>()));
+        categoryRepository.save(new Category(null, "Fantastic", new HashSet<>()));
+        categoryRepository.save(new Category(null, "Fantasy", new HashSet<>()));
+        categoryRepository.save(new Category(null, "Thriller", new HashSet<>()));
+        categoryRepository.save(new Category(null, "Action", new HashSet<>()));
+        categoryRepository.save(new Category(null, "Travel", new HashSet<>()));
 
-        movieService.save(
+
+        movieRepository.save(
                 new Movie(
                         null,
                         "Very interesting movie",
@@ -59,9 +72,11 @@ public class FilmRateApplication {
                         "Very long and interesting description",
                         new Rate(null, 158L, 5.5),
                         new ArrayList<>(),
-                        Set.copyOf(categoryService.getAll())
+                        Set.copyOf(categoryRepository.findAll())
                 )
         );
+
+
     }
 
 }

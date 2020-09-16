@@ -4,15 +4,14 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import ua.cursor.filmrate.dto.FilterSelectedCategories;
 import ua.cursor.filmrate.dto.MovieDTO;
 import ua.cursor.filmrate.dto.ReviewDTO;
-import ua.cursor.filmrate.entity.Category;
 import ua.cursor.filmrate.service.CategoryService;
 import ua.cursor.filmrate.service.MovieService;
+import ua.cursor.filmrate.service.mapper.CategoryMapper;
 import ua.cursor.filmrate.service.mapper.MovieMapper;
 import ua.cursor.filmrate.service.mapper.ReviewMapper;
-
-import java.util.stream.Collectors;
 
 @Controller
 @RequestMapping("/movies")
@@ -22,12 +21,14 @@ public class MovieController {
     private final MovieService movieService;
     private final MovieMapper movieMapper;
     private final ReviewMapper reviewMapper;
+    private final CategoryMapper categoryMapper;
     private final CategoryService categoryService;
 
     @GetMapping
     public String getAllMoviesByFilter(Model model) {
         model.addAttribute("movies", movieService.getAllMovies());
         model.addAttribute("categories", categoryService.getAll());
+        model.addAttribute("filtered", new FilterSelectedCategories());
         return "home";
     }
 
@@ -66,13 +67,19 @@ public class MovieController {
         return "review_form";
     }
 
-    @GetMapping("/category")
-    public String getAllInCategory(@ModelAttribute("category") Category category, Model model){
-        model.addAttribute("moviesFiltered",
-                movieService.getAllMovies().stream()
-                        .filter(movie -> movie.getCategories().contains(category))
-                        .collect(Collectors.toList())
+    @PostMapping("/category")
+    public String getAllInCategory(@ModelAttribute("filtered") FilterSelectedCategories filterSelectedCategories, Model model) {
+        System.out.println("\n\n\n\n\n\n" + filterSelectedCategories.toString() + "\n\n\n\n\n\n");
+        model.addAttribute("movies",
+                movieService.getAllByCategoriesContains(
+                        categoryMapper
+                                .toCategoryEntitiesFromBaseDTOs(
+                                        filterSelectedCategories
+                                                .getCategories()))
+
         );
+        model.addAttribute("categories", categoryMapper.toCategoryBaseDTOs(categoryService.getAll()));
+        model.addAttribute("filtered", filterSelectedCategories);
         return "filter";
 
     }

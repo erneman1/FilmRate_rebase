@@ -2,6 +2,7 @@ package ua.cursor.filmrate.service;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import ua.cursor.filmrate.entity.Category;
 import ua.cursor.filmrate.entity.Movie;
 import ua.cursor.filmrate.entity.Rate;
 import ua.cursor.filmrate.entity.Review;
@@ -16,7 +17,6 @@ import java.util.stream.Collectors;
 public class MovieService {
 
     private final MovieRepository movieRepository;
-    private final CategoryService categoryService;
 
     public List<Movie> getAllMovies() {
         return movieRepository.findAll();
@@ -30,6 +30,10 @@ public class MovieService {
 
     public Movie getMovieByIdWithReviews(long id) {
         return movieRepository.getByIdWithReviews(id);
+    }
+
+    public List<Movie> getAllByCategoriesContains(List<Category> categories) {
+        return movieRepository.getAllByCategoriesContains(categories);
     }
 
     public void save(Movie movie) {
