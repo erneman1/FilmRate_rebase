@@ -3,7 +3,6 @@ package ua.cursor.filmrate;
 import lombok.RequiredArgsConstructor;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 import ua.cursor.filmrate.entity.Category;
@@ -35,14 +34,13 @@ public class FilmRateApplication {
     }
 
     @PostConstruct
-    @ConditionalOnProperty(name = "createAll", matchIfMissing = true, havingValue = "true")
     void aaa() {
         userRepository.save(new User(
                 null,
                 "user",
                 "user",
                 "$2y$12$7AcCI6hb8d49xum72Eo3FuLXKsGHm7lWswiHmR29no9bfYe8/me5a",
-                Role.ROLE_ADMIN
+                Role.ROLE_USER
         ));
 
         userRepository.save(new User(
@@ -50,7 +48,7 @@ public class FilmRateApplication {
                 "admin",
                 "admin",
                 "$2y$12$1C2lTYmL2As6VnX4BggJdeEZWo5u1GNB56HsWwZY8.aarE06g/JKu",
-                Role.ROLE_USER
+                Role.ROLE_ADMIN
         ));
 
         categoryRepository.save(new Category(null, "Horror", new HashSet<>()));

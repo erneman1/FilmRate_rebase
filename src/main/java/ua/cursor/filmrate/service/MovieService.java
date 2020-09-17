@@ -37,6 +37,8 @@ public class MovieService {
     }
 
     public void save(Movie movie) {
+        movie.getRate().setRateValue(0.0);
+        movie.getRate().setVotesCount(0L);
         movieRepository.save(movie);
     }
 
@@ -53,6 +55,7 @@ public class MovieService {
     public void addRate(Long movieId, Double rateValue) {
         Movie movie = movieRepository.getById(movieId);
         Rate rate = movie.getRate();
+        System.out.println("******************************************************************\n\n");
         System.out.println("Rate Value " + rateValue);
         Double rateFromDB = rate.getRateValue() != null ? rate.getRateValue() : 0;
         System.out.println("Rate from DB " + rateFromDB);
@@ -62,6 +65,7 @@ public class MovieService {
         System.out.println("TMP RATE " + tmpRate);
         tmpRate /= votesCount;
         System.out.println("Saved TmpRate " + tmpRate);
+        System.out.println("******************************************************************\n\n");
         rate.setRateValue(tmpRate);
         rate.setVotesCount(votesCount);
         movieRepository.save(movie);
