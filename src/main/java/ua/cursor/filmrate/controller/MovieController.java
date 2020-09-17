@@ -47,22 +47,26 @@ public class MovieController {
         return "details";
     }
 
-    @GetMapping("/{id}/rate/{rate}")
-    public String addRate(@PathVariable("id") Long id, @PathVariable("rate") Double rate) {
-        movieService.addRate(id, rate);
-        return "redirect:/movies";
-    }
+//    @GetMapping("/{id}/rate/{rate}")
+//    public String addRate(@PathVariable("id") Long id, @PathVariable("rate") Double rate) {
+//        movieService.addRate(id, rate);
+//        return "redirect:/movies";
+//    }
 
-    @PostMapping("/{movieId}/add-review")
-    public String addReview(@PathVariable("movieId") Long movieId, ReviewDTO reviewDTO) {
+    @PostMapping("/{movieId}/{rate}/add-review")
+    public String addReview(@PathVariable("movieId") long movieId, @PathVariable("rate") double rate, ReviewDTO reviewDTO) {
         System.out.println(reviewDTO.toString());
-        movieService.addReview(movieId, reviewMapper.toReviewEntityFromDTO(reviewDTO));
+        if (!reviewDTO.getMessage().isEmpty()){
+            movieService.addReview(movieId, reviewMapper.toReviewEntityFromDTO(reviewDTO));
+        }
+        movieService.addRate(movieId, rate);
         return "redirect:/movies/" + movieId;
     }
 
     @GetMapping("/{movieId}/add-review")
     public String getReviewForm(@PathVariable long movieId, Model model) {
         model.addAttribute("review", new ReviewDTO());
+        model.addAttribute("movie", movieService.getMovieByIdWithReviews(movieId));
         model.addAttribute("movie_id", movieId);
         return "review_form";
     }

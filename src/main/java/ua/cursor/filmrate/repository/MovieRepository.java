@@ -14,6 +14,6 @@ public interface MovieRepository extends JpaRepository<Movie, Long> {
     @Query("from Movie as m left join fetch m.categories left join fetch m.reviews where m.id =:id")
     Movie getByIdWithReviews(long id);
 
-    @Query("from Movie as m left join fetch m.reviews left join fetch m.categories as c where c in :categories")
+    @Query("from Movie as m left join fetch m.categories as c where c in :categories")
     List<Movie> getAllByCategoriesContains(List<Category> categories);
 }

@@ -17,21 +17,29 @@
         </ul>
     </nav>
 
-   <div id="formWrapper" style="background-color: #d6d4d5" class="border border-light mt-2 p-3 h-100">
+    <div id="formWrapper" style="background-color: #d6d4d5" class="border border-light mt-2 p-3 h-100">
 
-       <h3 class="mt-3 text-dark">Enter your review:</h3>
+        <h3 class="mt-3 text-dark">Enter your review:</h3>
 
-       <form role="form" action="#" th:action="@{/movies/{id}/add-review(id=${movie_id})}" method="post">
-           <div class="form-group mt-3">
-               <textarea class="form-control rounded" rows="10"></textarea>
-           </div>
-           <div class="form-group">
-               <input type="submit" value="Send review" class="form-control btn btn-info">
-           </div>
+        <form role="form" action="#" th:action="@{/movies/{id}/{rate}/add-review(id=${movie_id}, rate=${movie.rate.rateValue})}" method="post"
+              th:object="${review}">
+            <div class="d-flex flex-row">
+                <input type="radio" th:field="${movie.rate.rateValue}"
+                       th:each="i : ${#numbers.sequence(1, 10)}" th:value="${i}" th:text="${i}"
+                >
+            </div>
+            <div class="form-group mt-3 w-100">
+                <label class="w-100">
+                    <textarea type="text" th:field="*{message}" class="form-control rounded" rows="10"></textarea>
+                </label>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Send review" class="form-control btn btn-info">
+            </div>
 
-       </form>
+        </form>
 
-   </div>
+    </div>
 
 
 </div>

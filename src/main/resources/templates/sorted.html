@@ -9,6 +9,7 @@
 <body style="background-image: url(https://wallpaperaccess.com/full/288727.jpg)">
 <div class="container">
 
+    /** Navigation **/
     <nav class="row p-2 border border-light rounded" style="background-color: #4e555b">
         <ul class="nav nav-pills col-11">
             <li class="nav-item">
@@ -20,10 +21,6 @@
         </ul>
         <a th:href="@{/logout}" class="btn btn-primary d-block float-right">LogOut</a>
     </nav>
-
-    <form th:method="post" th:action="@{/movies/sort}">
-        <input type="submit" value="Sort by rating" class="btn btn-link">
-    </form>
 
     <div class="row pt-2 pb-2 mt-3 border border-light rounded shadow" style="background-color: #4e555b"
          th:each="movie : ${movies}">
