@@ -2,9 +2,7 @@ package ua.cursor.filmrate.dto;
 
 import lombok.*;
 import ua.cursor.filmrate.dto.base.UserBaseDTO;
-
-import java.util.HashSet;
-import java.util.Set;
+import ua.cursor.filmrate.entity.enums.Role;
 
 @Data
 @AllArgsConstructor
@@ -12,5 +10,5 @@ import java.util.Set;
 @EqualsAndHashCode(callSuper = true)
 @ToString(callSuper = true)
 public class UserDTO extends UserBaseDTO {
-    private Set<RoleDTO> userRoles = new HashSet<>();
+    Role role;
 }

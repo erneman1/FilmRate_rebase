@@ -1,0 +1,44 @@
+<html xmlns:th="https://www.thymeleaf.org">
+<head>
+    <title>Film Rate</title>
+    <meta charset="UTF-8">
+    <meta content="width=device-width, initial-scale=1, shrink-to-fit=no" name="viewport">
+    <link href="../static/css/bootstrap.css" media="all" rel="stylesheet" th:href="@{/css/bootstrap.css}"
+          type="text/css">
+</head>
+<body style="background-color: #d6d4d5">
+<div class="container">
+
+    <div class="w-50 mx-auto bg-secondary border border-light rounded p-3 mt-5 text-light">
+        <form method="post" name="f" th:action="@{/login}">
+            <legend>Please Login</legend>
+            <div class="alert alert-error" th:if="${param.error}">
+                Invalid username or password.
+            </div>
+            <div class="alert alert-success" th:if="${param.logout}">
+                You have been logged out.
+            </div>
+
+            <div class="form-group">
+                <label for="username">Username</label>
+                <input class="form-control" id="username" name="username" type="text"/>
+            </div>
+
+            <div class="form-group">
+                <label for="password">Password</label>
+                <input class="form-control" id="password" name="password" type="password"/>
+            </div>
+
+            <div class="d-flex flex-row align-items-center">
+                <div class="form-actions">
+                    <button class="btn btn-primary mr-3" type="submit">Log in</button>
+                </div>
+            </div>
+        </form>
+
+        <a th:href="@{/registration}">Registration</a>
+    </div>
+
+</div>
+</body>
+</html>
