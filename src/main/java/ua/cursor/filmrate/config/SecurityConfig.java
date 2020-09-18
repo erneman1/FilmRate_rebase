@@ -22,21 +22,26 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         this.userDetailsService = userDetailsService;
     }
 
-
     @Override
-    protected void configure(AuthenticationManagerBuilder auth) throws Exception {
+    protected void configure(AuthenticationManagerBuilder auth) {
         auth.authenticationProvider(daoAuthenticationProvider());
     }
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        http
-                .csrf().disable()
+
+        http.csrf().disable()
                 .authorizeRequests()
-                .antMatchers("/admin/**").hasRole("ADMIN")
+                .antMatchers("/registration", "/css/**", "/js/**").permitAll()
+                .antMatchers("/admin/**").hasAnyRole("ROLE_ADMIN")
                 .anyRequest().authenticated()
                 .and()
-                .formLogin().defaultSuccessUrl("/movies", true);
+                .formLogin()
+                .loginPage("/login").permitAll()
+                .defaultSuccessUrl("/movies", true)
+                .and()
+                .logout()
+                .permitAll();
     }
 
     @Bean

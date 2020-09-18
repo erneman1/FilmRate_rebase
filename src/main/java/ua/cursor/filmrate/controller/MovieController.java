@@ -48,12 +48,6 @@ public class MovieController {
         return "details";
     }
 
-//    @GetMapping("/{id}/rate/{rate}")
-//    public String addRate(@PathVariable("id") Long id, @PathVariable("rate") Double rate) {
-//        movieService.addRate(id, rate);
-//        return "redirect:/movies";
-//    }
-
     @PostMapping("/{movieId}/add-review")
     public String addReview(@PathVariable("movieId") long movieId, @ModelAttribute("newRate") RateValue rateValue, ReviewDTO reviewDTO, Model model) {
         model.addAttribute("newRate", new RateValue());
