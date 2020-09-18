@@ -65,10 +65,22 @@ public class FilmRateApplication {
         movieRepository.save(
                 new Movie(
                         null,
-                        "Very interesting movie",
+                        "The Devil All The Time",
+                        "Tom Holland",
+                        "Sinister characters converge around a young man devoted to protecting those he loves in a postwar backwoods town teeming with corruption and brutality.",
+                        new Rate(null, 100L, 10.0),
+                        new ArrayList<>(),
+                        Set.copyOf(categoryRepository.findAll())
+                )
+        );
+
+        movieRepository.save(
+                new Movie(
+                        null,
+                        "Very interesting movie ",
                         "Cool director",
                         "Very long and interesting description",
-                        new Rate(null, 158L, 5.5),
+                        new Rate(null, 0L, 0.0),
                         new ArrayList<>(),
                         Set.copyOf(categoryRepository.findAll())
                 )

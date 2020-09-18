@@ -21,7 +21,7 @@
             <h1 th:text="*{name}"></h1>
             <h4><small>Director: </small>[[${movie.director}]]</h4>
             <div class="d-flex flex-row justify-content-between">
-                <h5 class="mr-4"><small>Rating: </small>[[${movie.rate.rateValue}]]</h5>
+                <h5 class="mr-4"><small>Rating: </small>[[${#numbers.formatDecimal(movie.rate.rateValue, 1, 1)}]]</h5>
                 <h5><small>Votes: </small>[[${movie.rate.votesCount}]]</h5>
             </div>
 
