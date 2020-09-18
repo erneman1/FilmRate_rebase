@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.*;
 import ua.cursor.filmrate.dto.FilterSelectedCategories;
 import ua.cursor.filmrate.dto.MovieDTO;
 import ua.cursor.filmrate.dto.ReviewDTO;
+import ua.cursor.filmrate.entity.RateValue;
 import ua.cursor.filmrate.service.CategoryService;
 import ua.cursor.filmrate.service.MovieService;
 import ua.cursor.filmrate.service.mapper.CategoryMapper;
@@ -53,27 +54,26 @@ public class MovieController {
 //        return "redirect:/movies";
 //    }
 
-    @PostMapping("/{movieId}/{rate}/add-review")
-    public String addReview(@PathVariable("movieId") long movieId, @PathVariable("rate") double rate, ReviewDTO reviewDTO) {
-        System.out.println(reviewDTO.toString());
-        if (!reviewDTO.getMessage().isEmpty()){
+    @PostMapping("/{movieId}/add-review")
+    public String addReview(@PathVariable("movieId") long movieId, @ModelAttribute("newRate") RateValue rateValue, ReviewDTO reviewDTO, Model model) {
+        model.addAttribute("newRate", new RateValue());
+        if(!reviewDTO.getMessage().isEmpty()){
             movieService.addReview(movieId, reviewMapper.toReviewEntityFromDTO(reviewDTO));
         }
-        movieService.addRate(movieId, rate);
+        movieService.addRate(movieId, rateValue.getValue());
         return "redirect:/movies/" + movieId;
     }
 
     @GetMapping("/{movieId}/add-review")
     public String getReviewForm(@PathVariable long movieId, Model model) {
         model.addAttribute("review", new ReviewDTO());
-        model.addAttribute("movie", movieService.getMovieByIdWithReviews(movieId));
+        model.addAttribute("newRate", new RateValue());
         model.addAttribute("movie_id", movieId);
         return "review_form";
     }
 
     @PostMapping("/category")
     public String getAllInCategory(@ModelAttribute("filtered") FilterSelectedCategories filterSelectedCategories, Model model) {
-        System.out.println("\n\n\n\n\n\n" + filterSelectedCategories.toString() + "\n\n\n\n\n\n");
         model.addAttribute("movies",
                 movieService.getAllByCategoriesContains(
                         categoryMapper
@@ -85,6 +85,5 @@ public class MovieController {
         model.addAttribute("categories", categoryMapper.toCategoryBaseDTOs(categoryService.getAll()));
         model.addAttribute("filtered", filterSelectedCategories);
         return "filter";
-
     }
 }
