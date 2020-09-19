@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:form="http://www.w3.org/1999/xhtml">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <title>Review</title>
     <meta charset="UTF-8">
@@ -24,10 +24,20 @@
         <form role="form" action="#" th:action="@{/movies/{id}/add-review(id=${movie_id})}" method="post"
               th:object="${review}">
             <div class="d-flex flex-row" th:object="${newRate}">
-                <label class="mr-2">
-                    <input type="radio" th:field="${newRate.value}"
+                <label>
+                    <input type="radio" th:field="*{value}" class="radio ml-3"
                            th:each="i : ${#numbers.sequence(1, 10)}" th:value="${i.doubleValue()}" th:text="${i}"
                     >
+                </label>
+            </div>
+            <div th:object="${review}">
+                <label class="mr-2">
+                    <input class="custom-radio" type="radio" th:field="*{liked}" name="liked" value="true" th:value="${true}">
+                    Like
+                </label>
+                <label>
+                    <input class="custom-radio" type="radio" th:field="*{liked}" name="liked" value="false" th:value="${false}">
+                    Don't like
                 </label>
             </div>
             <div class="form-group mt-3 w-100">
