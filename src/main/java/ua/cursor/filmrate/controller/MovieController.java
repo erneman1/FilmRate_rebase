@@ -51,15 +51,12 @@ public class MovieController {
     @PostMapping("/{movieId}/add-review")
     public String addReview(@PathVariable("movieId") long movieId, @ModelAttribute("newRate") RateValue rateValue, ReviewDTO reviewDTO, Model model) {
         model.addAttribute("newRate", new RateValue());
-        System.out.println("\n\n\n" + reviewDTO.toString() + "\n\n\n");
-        if(!reviewDTO.getMessage().isEmpty()){
+        if (!reviewDTO.getMessage().isEmpty()) {
             movieService.addReview(movieId, reviewMapper.toReviewEntityFromDTO(reviewDTO));
         }
         if (rateValue != null) {
             movieService.addRate(movieId, rateValue.getValue());
         }
-
-
         return "redirect:/movies/" + movieId;
     }
 
@@ -86,8 +83,4 @@ public class MovieController {
         return "filter";
     }
 
-    @PostMapping("/like")
-    public void like(@ModelAttribute ReviewDTO reviewDTO){
-        reviewDTO.setLiked(true);
-    }
 }

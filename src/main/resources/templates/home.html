@@ -17,6 +17,9 @@
             <li class="nav-item" sec:authorize="hasRole('ROLE_ADMIN')">
                 <a class="nav-link" th:href="@{/admin/movies/add}">Add movie</a>
             </li>
+            <li class="text-light d-flex flex-row align-items-center mx-auto">
+                <h5 th:text="'Welcome ' + ${#authentication.getName()} + '!'" class="ml-3"></h5>
+            </li>
         </ul>
         <a th:href="@{/logout}" class="btn btn-primary float-right">LogOut</a>
     </nav>
@@ -50,7 +53,7 @@
             <div class="d-flex flex-row">
                 <a class="col-11 col-md-11 col-sm-11 d-block text-light text-decoration-none"
                    th:href="@{/movies/{id}(id=${movie.id})}">
-                    <h4 th:text="${movie.name}">A WHITE, WHITE DAY</h4>
+                    <h4 th:text="${movie.name}"></h4>
                     <h5 class="mb-2">
                         <small>Director: </small>[[${movie.director}]]
                     </h5>
@@ -61,7 +64,7 @@
                     </div>
 
                     <p class="mt-3" th:text="${movie.description}"></p>
-                    <h4 class="text-right" th:if="${movie.rate.rateValue} != 0"><small>Rating: </small>[[${movie.rate.rateValue}]]
+                    <h4 class="text-right" th:if="${movie.rate.rateValue} != 0"><small>Rating: </small>[[${#numbers.formatDecimal(movie.rate.rateValue, 1, 1)}]]
                     </h4>
                     <h4 class="text-right" th:if="${movie.rate.votesCount} != 0"><small>Votes: </small>[[${movie.rate.votesCount}]]
                     </h4>
