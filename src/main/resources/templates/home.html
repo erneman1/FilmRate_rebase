@@ -17,6 +17,9 @@
             <li class="nav-item" sec:authorize="hasRole('ROLE_ADMIN')">
                 <a class="nav-link" th:href="@{/admin/movies/add}">Add movie</a>
             </li>
+            <li class="text-light d-flex flex-row align-items-center mx-auto">
+                <h5 th:text="'Welcome ' + ${#authentication.getName()} + '!'" class="ml-3"></h5>
+            </li>
         </ul>
         <a th:href="@{/logout}" class="btn btn-primary float-right">LogOut</a>
     </nav>
